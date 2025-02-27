@@ -45,7 +45,9 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
       newParentLayers.remove(baseLayer);
       setParentLayers(newParentLayers);
     };
-  }, [parentLayers, setParentLayers]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useSetProp(
     baseLayerRef,
