@@ -1,7 +1,5 @@
 import { PropsWithChildren, useRef } from "react";
 
-import "ol/ol.css";
-
 import { Collection as olCollection, View as olView } from "ol";
 import olMap from "ol/Map";
 import olLayerGroup from "ol/layer/Group";
