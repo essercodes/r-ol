@@ -18,8 +18,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "lib/index.ts"),
       name: "@essercodes/r-ol",
+      fileName: "index",
       // the proper extensions will be added
-      fileName: "r-ol",
       formats: ["es"],
     },
     rollupOptions: {
@@ -28,5 +28,6 @@ export default defineConfig({
       external: ["react", "react-dom", "react/jsx-runtime", /^ol($|\/)/],
     },
     copyPublicDir: false,
+    emptyOutDir: true,
   },
 });
