@@ -1,4 +1,4 @@
-import { createContext, MutableRefObject, useContext } from "react";
+import { createContext, RefObject, useContext } from "react";
 
 import olView from "ol/View";
 import { Coordinate as olCoordinate } from "ol/coordinate";
@@ -7,7 +7,7 @@ import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeView = olView | null;
-export type typeViewRef = MutableRefObject<typeView>;
+export type typeViewRef = RefObject<typeView>;
 export type typeViewContext = typeViewRef | null;
 
 export const ViewContext = createContext<typeViewContext>(null);

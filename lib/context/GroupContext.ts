@@ -1,4 +1,4 @@
-import { createContext, MutableRefObject, useContext } from "react";
+import { createContext, RefObject, useContext } from "react";
 
 import { Collection as olCollection } from "ol";
 import olLayerGroup from "ol/layer/Group";
@@ -11,7 +11,7 @@ import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeGroup = olLayerGroup | null;
-export type typeGroupRef = MutableRefObject<typeGroup>;
+export type typeGroupRef = RefObject<typeGroup>;
 export type typeGroupContext = typeGroupRef | null;
 
 export const GroupContext = createContext<typeGroupContext>(null);
