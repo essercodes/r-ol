@@ -1,50 +1,119 @@
-# React + TypeScript + Vite
+# React OpenLayers (@essercodes/r-ol)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React wrapper for OpenLayers providing easy-to-use components for map integration.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# npm
+npm install @essercodes/r-ol ol
 
-## Expanding the ESLint configuration
+# yarn
+yarn add @essercodes/r-ol ol
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# pnpm
+pnpm add @essercodes/r-ol ol
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Basic Usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```jsx
+import React from 'react';
+import { Map, View, TileLayer, OsmSource, TargetDiv } from '@essercodes/r-ol';
+import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+function MyMap() {
+  return (
+    <Map>
+      <TargetDiv className="my-map-container" />
+      <View zoom={5} center={[0, 0]} />
+      <TileLayer>
+        <OsmSource />
+      </TileLayer>
+    </Map>
+  );
+}
+
+export default MyMap;
 ```
+
+## Important Notes
+
+1. Remember to import OpenLayers CSS in your application:
+   ```jsx
+   import 'ol/ol.css';
+   ```
+
+2. This library uses OpenLayers as a peer dependency, so you need to install it separately.
+
+## Components
+
+### Map
+
+The main container for your map.
+
+```jsx
+<Map>
+  {/* Map components */}
+</Map>
+```
+
+### View
+
+Controls the map view.
+
+```jsx
+<View 
+  center={[longitude, latitude]} 
+  zoom={8} 
+  rotation={0} 
+/>
+```
+
+### TileLayer
+
+A standard tile layer.
+
+```jsx
+<TileLayer>
+  <OsmSource />
+</TileLayer>
+```
+
+### TargetDiv
+
+Creates a div element that serves as the map container.
+
+```jsx
+<TargetDiv className="custom-map-class" />
+```
+
+## Available Sources
+
+### OsmSource
+
+OpenStreetMap tile source.
+
+```jsx
+<OsmSource />
+```
+
+### XYZ
+
+XYZ tile source.
+
+```jsx
+<XYZ url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+```
+
+### MapboxRaster
+
+Mapbox raster tiles.
+
+```jsx
+<MapboxRaster />
+```
+
+## License
+
+MIT
