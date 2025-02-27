@@ -5,7 +5,7 @@ import olView, { ViewOptions as olViewOptions } from "ol/View";
 import olLayerGroup from "ol/layer/Group";
 import { Size as olSize } from "ol/size";
 
-import useInstanceState from "../UseInstanceState";
+import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeMap = olMap | null;

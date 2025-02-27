@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from "react";
 
 import { useMapTarget } from "./context/MapContext";
 
-export default function TargetDiv({ className }: { className?: string }) {
+export function TargetDiv({ className }: { className?: string }) {
   const mapDivRef = useRef<HTMLDivElement>(null);
   const [, setTarget] = useMapTarget();
 

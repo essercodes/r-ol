@@ -3,7 +3,7 @@ import { createContext, MutableRefObject, useContext } from "react";
 import olLayerBase from "ol/layer/Base";
 import { Extent as olExtent } from "ol/extent";
 
-import useInstanceState from "../UseInstanceState";
+import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeBaseLayer = olLayerBase | null;

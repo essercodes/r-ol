@@ -16,7 +16,7 @@ export type ObservableProps<P = unknown> = P & {
   composing?: olObservable;
 };
 
-export default function Observable({
+export function Observable({
   children,
   composing,
 }: PropsWithChildren<ObservableProps>) {

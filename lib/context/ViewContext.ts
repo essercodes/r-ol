@@ -3,7 +3,7 @@ import { createContext, MutableRefObject, useContext } from "react";
 import olView from "ol/View";
 import { Coordinate as olCoordinate } from "ol/coordinate";
 
-import useInstanceState from "../UseInstanceState";
+import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeView = olView | null;

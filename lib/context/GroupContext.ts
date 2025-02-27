@@ -7,7 +7,7 @@ import olSource from "ol/source/Source";
 import olLayerBase from "ol/layer/Base";
 import olRendererLayer from "ol/renderer/Layer";
 
-import useInstanceState from "../UseInstanceState";
+import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeGroup = olLayerGroup | null;

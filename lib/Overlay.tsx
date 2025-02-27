@@ -4,10 +4,10 @@ import olOverlay, { Positioning as olPositioning } from "ol/Overlay";
 import { Coordinate as olCoordinate } from "ol/coordinate";
 
 import { useMap } from "./context/MapContext";
-import useSetProp from "./UseSetProp";
+import { useSetProp } from "./UseSetProp";
 import { nullCheckRef } from "./Errors";
 
-export default function Overlay({
+export function Overlay({
   children,
   className,
   style,

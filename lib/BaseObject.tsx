@@ -2,7 +2,7 @@ import { PropsWithChildren, useRef } from "react";
 
 import olBaseObject from "ol/Object";
 
-import Observable, { ObservableProps } from "./Observable";
+import { Observable, ObservableProps } from "./Observable";
 
 /**
  * Functional component implements Abstract base class ol/Object-BaseObject
@@ -17,7 +17,7 @@ export type BaseObjectProps = ObservableProps & {
   composing?: olBaseObject;
 };
 
-export default function BaseObject(props: PropsWithChildren<BaseObjectProps>) {
+export function BaseObject(props: PropsWithChildren<BaseObjectProps>) {
   const baseObjectRef = useRef<olBaseObject | null>(props.composing ?? null);
 
   //Instantiate if not passed.
