@@ -1,6 +1,6 @@
 import {
   createContext,
-  MutableRefObject,
+  RefObject,
   useContext,
   useSyncExternalStore,
 } from "react";
@@ -10,7 +10,7 @@ import olObservable from "ol/Observable";
 import { nullCheckContext } from "../Errors";
 
 export type typeObservable = olObservable | null;
-export type typeObservableRef = MutableRefObject<typeObservable>;
+export type typeObservableRef = RefObject<typeObservable>;
 export type typeObservableContext = typeObservableRef | null;
 
 export const ObservableContext = createContext<typeObservableContext>(null);

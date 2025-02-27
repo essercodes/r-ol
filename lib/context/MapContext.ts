@@ -1,4 +1,4 @@
-import { createContext, MutableRefObject, useContext } from "react";
+import { createContext, RefObject, useContext } from "react";
 
 import olMap from "ol/Map";
 import olView, { ViewOptions as olViewOptions } from "ol/View";
@@ -9,7 +9,7 @@ import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeMap = olMap | null;
-export type typeMapRef = MutableRefObject<typeMap>;
+export type typeMapRef = RefObject<typeMap>;
 export type typeMapContext = typeMapRef | null;
 
 export const MapContext = createContext<typeMapContext>(null);

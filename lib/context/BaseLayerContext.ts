@@ -1,4 +1,4 @@
-import { createContext, MutableRefObject, useContext } from "react";
+import { createContext, RefObject, useContext } from "react";
 
 import olLayerBase from "ol/layer/Base";
 import { Extent as olExtent } from "ol/extent";
@@ -7,7 +7,7 @@ import { useInstanceState } from "../UseInstanceState";
 import { nullCheckContext } from "../Errors";
 
 export type typeBaseLayer = olLayerBase | null;
-export type typeBaseLayerRef = MutableRefObject<typeBaseLayer>;
+export type typeBaseLayerRef = RefObject<typeBaseLayer>;
 export type typeBaseLayerContext = typeBaseLayerRef | null;
 
 export const BaseLayerContext = createContext<typeBaseLayerContext>(null);
