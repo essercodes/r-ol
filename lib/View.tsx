@@ -5,10 +5,10 @@ import { Coordinate as olCoordinate } from "ol/coordinate";
 
 import { ViewContext } from "./context/ViewContext";
 import { useMapView } from "./context/MapContext";
-import useSetProp from "./UseSetProp";
+import { useSetProp } from "./UseSetProp";
 import { nullCheckRef } from "./Errors";
 
-export default function View({
+export function View({
   children,
   center,
   constrainResolution,

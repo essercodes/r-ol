@@ -3,9 +3,9 @@ import { PropsWithChildren, useRef } from "react";
 import olLayer from "ol/layer/Layer";
 import { Source as olSource } from "ol/source";
 
-import useSetProp from "../UseSetProp";
+import { useSetProp } from "../UseSetProp";
 import { LayerContext } from "../context";
-import BaseLayer, { BaseLayerProps } from "./Base";
+import { BaseLayer, BaseLayerProps } from "./Base";
 
 export type LayerProps = BaseLayerProps & {
   composing?: olLayer;

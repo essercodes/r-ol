@@ -15,8 +15,8 @@ import {
   typeGroupContext,
 } from "./context/GroupContext";
 import { MapContext, typeMap } from "./context/MapContext";
-import useSetProp from "./UseSetProp";
-import BaseObject, { BaseObjectProps } from "./BaseObject";
+import { useSetProp } from "./UseSetProp";
+import { BaseObject, BaseObjectProps } from "./BaseObject";
 
 export type MapProps = BaseObjectProps & {
   composing?: olMap;
@@ -27,7 +27,7 @@ export type MapProps = BaseObjectProps & {
   view?: olView | Promise<olViewOptions>;
 };
 
-export default function Map(props: PropsWithChildren<MapProps>) {
+export function Map(props: PropsWithChildren<MapProps>) {
   const mapInstanceRef = useRef<typeMap>(props.composing ?? null);
   const mapLayerGroupRef: typeGroupContext = useRef<typeGroup>(null);
 

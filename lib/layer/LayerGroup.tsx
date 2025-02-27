@@ -8,14 +8,14 @@ import {
   typeGroup,
   typeGroupRef,
 } from "../context";
-import BaseLayer, { BaseLayerProps } from "./Base";
+import { BaseLayer, BaseLayerProps } from "./Base";
 import { nullCheckRef } from "../Errors";
 
 export type LayerGroupProps = BaseLayerProps & {
   composing?: olLayerGroup;
 };
 
-export default function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
+export function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
   const layerGroupDivRef = useRef<HTMLDivElement>(null);
   const layerGroupRef: typeGroupRef = useRef<typeGroup>(
     props.composing ?? null,

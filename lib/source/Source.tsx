@@ -12,7 +12,7 @@ import {
 } from "ol/Tile";
 
 import { typeSource, useLayerSource } from "../context";
-import useSetProp from "../UseSetProp";
+import { useSetProp } from "../UseSetProp";
 import { nullCheckRef } from "../Errors";
 
 export function OsmSource() {

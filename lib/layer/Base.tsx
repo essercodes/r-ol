@@ -6,9 +6,9 @@ import olBaseLayer from "ol/layer/Base";
 import { Extent as olExtent } from "ol/extent";
 
 import { BaseLayerContext, useGroupLayers } from "../context";
-import useSetProp from "../UseSetProp";
+import { useSetProp } from "../UseSetProp";
 import { nullCheckRef } from "../Errors";
-import BaseObject, { BaseObjectProps } from "../BaseObject";
+import { BaseObject, BaseObjectProps } from "../BaseObject";
 
 export type BaseLayerProps = BaseObjectProps & {
   composing?: olBaseLayer;
@@ -23,7 +23,7 @@ export type BaseLayerProps = BaseObjectProps & {
   zIndex?: number;
 };
 
-export default function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
+export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
   const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
   const [parentLayers, setParentLayers] = useGroupLayers();
 

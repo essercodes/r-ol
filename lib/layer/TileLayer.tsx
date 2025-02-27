@@ -5,7 +5,7 @@ import { Tile as olTile } from "ol";
 import olSourceTile from "ol/source/Tile";
 
 import { getElementOrder } from "../context";
-import useSetProp from "../UseSetProp";
+import { useSetProp } from "../UseSetProp";
 import { nullCheckRef } from "../Errors";
 import { Layer, LayerProps } from "./Layer";
 
@@ -16,7 +16,7 @@ export type TileLayerProps = LayerProps & {
   source?: olSourceTile<olTile> | null;
 };
 
-export default function TileLayer(props: PropsWithChildren<TileLayerProps>) {
+export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
   const tileLayerRef = useRef<typeTileLayer>(props.composing ?? null);
   const tileLayerDivRef = useRef<HTMLDivElement>(null);
 

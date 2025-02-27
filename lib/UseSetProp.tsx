@@ -4,7 +4,7 @@ import olObject from "ol/Object";
 
 import { nullCheckRef } from "./Errors";
 
-export default function useSetProp<T extends olObject, P>(
+export function useSetProp<T extends olObject, P>(
   RefObject: RefObject<T | null>,
   prop: P | undefined,
   setter: (obj: T, prop: P) => void,
