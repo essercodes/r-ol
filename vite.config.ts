@@ -11,7 +11,7 @@ export default defineConfig({
     react(),
     dts({
       include: ["lib/**/*.ts", "lib/**/*.tsx"],
-      outDir: "dist/@essercodes/r-ol",
+      outDir: "dist",
     }),
   ],
   build: {
@@ -19,7 +19,7 @@ export default defineConfig({
       entry: resolve(__dirname, "lib/index.ts"),
       name: "@essercodes/r-ol",
       // the proper extensions will be added
-      fileName: "@essercodes/r-ol/r-ol",
+      fileName: "r-ol",
       formats: ["es"],
     },
     rollupOptions: {
