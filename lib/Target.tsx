@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef } from "react";
+import {CSSProperties, useLayoutEffect, useRef} from "react";
 
 import { useMapTarget } from "./context/MapContext";
 
-export function TargetDiv({ className }: { className?: string }) {
+export function TargetDiv({ className, style }: { className?: string, style?: CSSProperties }) {
   const mapDivRef = useRef<HTMLDivElement>(null);
   const [, setTarget] = useMapTarget();
 
@@ -15,7 +15,8 @@ export function TargetDiv({ className }: { className?: string }) {
   return (
     <div
       ref={mapDivRef}
-      className={"w-full h-svh bottom-0 top-0" + " " + className}
+      className={className}
+      style={style}
     />
   );
 }
