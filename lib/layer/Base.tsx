@@ -32,22 +32,30 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
 
   // Add to parent layer group.
   useEffect(() => {
+    let handleCleanup = false;
     const baseLayer = nullCheckRef(baseLayerRef);
 
-    const newParentLayers = new olCollection<olBaseLayer>();
-    newParentLayers.extend(parentLayers);
-    newParentLayers.push(baseLayer);
-    setParentLayers(newParentLayers);
+    // Layers added to parentLayers updated the dependency and re-fires the effect. We don't want
+    // to create a loop by adding the layer again if it already exists in the parent layer group.
+    const layerExists = parentLayers.some(layer => layer === baseLayer);
 
-    return () => {
+    if (!layerExists) {
       const newParentLayers = new olCollection<olBaseLayer>();
       newParentLayers.extend(parentLayers);
-      newParentLayers.remove(baseLayer);
+      newParentLayers.push(baseLayer);
       setParentLayers(newParentLayers);
-    };
+      handleCleanup = true;
+    }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => {
+      if (handleCleanup) {
+        const newParentLayers = new olCollection<olBaseLayer>();
+        newParentLayers.extend(parentLayers);
+        newParentLayers.remove(baseLayer);
+        setParentLayers(newParentLayers);
+      }
+    };
+  }, [parentLayers, setParentLayers]);
 
   useSetProp(
     baseLayerRef,
