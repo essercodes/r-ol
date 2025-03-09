@@ -1,6 +1,6 @@
 {
   "name": "@essercodes/r-ol",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -38,6 +38,18 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./context": {
+      "import": "./dist/context/index.js",
+      "types": "./dist/context/index.d.ts"
+    },
+    "./source": {
+      "import": "./dist/source/index.js",
+      "types": "./dist/source/index.d.ts"
+    },
+    "./layer": {
+      "import": "./dist/layer/index.js",
+      "types": "./dist/layer/index.d.ts"
     }
   },
   "files": [
