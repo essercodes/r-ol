@@ -24,13 +24,13 @@ import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
 function MyMap() {
   return (
-    <Map>
-      <TargetDiv className="my-map-container" />
-      <View zoom={5} center={[0, 0]} />
-      <TileLayer>
-        <OsmSource />
-      </TileLayer>
-    </Map>
+       <Map>
+          <TargetDiv style={{height: '100svh', width: '100svh'}}/>
+          <View zoom={12} center={fromLonLat([-89.38, 43.07])}/>
+          <TileLayer>
+             <OsmSource/>
+          </TileLayer>
+       </Map>
   );
 }
 
