@@ -106,14 +106,6 @@ XYZ tile source.
 <XYZ url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
 ```
 
-### MapboxRaster
-
-Mapbox raster tiles.
-
-```jsx
-<MapboxRaster />
-```
-
 ## License
 
 MIT
