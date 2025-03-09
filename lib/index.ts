@@ -6,7 +6,3 @@ export * from "./BaseObject";
 export * from "./UseInstanceState";
 export * from "./UseSetProp";
 export * from "./View";
-
-export * from "./context";
-export * from "./layer";
-export * from "./source";

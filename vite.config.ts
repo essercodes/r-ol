@@ -16,9 +16,13 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, "lib/index.ts"),
+      entry: {
+        index:  resolve(__dirname, "lib/index.ts"),
+        "context/index":  resolve(__dirname, "lib/context/index.ts"),
+        "layer/index":  resolve(__dirname, "lib/layer/index.ts"),
+        "source/index":  resolve(__dirname, "lib/source/index.ts"),
+      },
       name: "@essercodes/r-ol",
-      fileName: "index",
       // the proper extensions will be added
       formats: ["es"],
     },
