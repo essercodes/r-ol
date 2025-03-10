@@ -21,6 +21,7 @@ export default defineConfig({
         "context/index":  resolve(__dirname, "lib/context/index.ts"),
         "layer/index":  resolve(__dirname, "lib/layer/index.ts"),
         "source/index":  resolve(__dirname, "lib/source/index.ts"),
+        "source/interaction":  resolve(__dirname, "lib/interaction/index.ts"),
       },
       name: "@essercodes/r-ol",
       // the proper extensions will be added
