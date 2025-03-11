@@ -1,7 +1,7 @@
 import { PropsWithChildren, useRef } from "react";
 
 import { Collection as olCollection, View as olView } from "ol";
-import olMap from "ol/Map";
+import olMap, {MapOptions as olMapOptions} from "ol/Map";
 import olLayerGroup from "ol/layer/Group";
 import { Size as olSize } from "ol/size";
 import olBaseLayer from "ol/layer/Base";
@@ -11,13 +11,14 @@ import {
   GroupContext,
   typeGroup,
   typeGroupContext,
-} from "./context/GroupContext";
-import { MapContext, typeMap } from "./context/MapContext";
+} from "./context";
+import { MapContext, typeMap } from "./context";
 import { useSetProp } from "./UseSetProp";
-import { BaseObject, BaseObjectProps } from "./BaseObject";
+import { BaseObject, BaseObjectProps } from "./Object.tsx";
 
 export type MapProps = BaseObjectProps & {
   composing?: olMap;
+  initialOptions?: olMapOptions;
   layerGroup?: olLayerGroup;
   layers?: Array<olBaseLayer> | olCollection<olBaseLayer>;
   size?: olSize;
@@ -29,7 +30,7 @@ export function Map(props: PropsWithChildren<MapProps>) {
   const mapInstanceRef = useRef<typeMap>(props.composing ?? null);
   const mapLayerGroupRef: typeGroupContext = useRef<typeGroup>(null);
 
-  mapInstanceRef.current ??= new olMap();
+  mapInstanceRef.current ??= new olMap(props.initialOptions);
   mapLayerGroupRef.current ??= mapInstanceRef.current.getLayerGroup();
 
   useSetProp(
