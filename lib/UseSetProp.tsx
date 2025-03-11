@@ -9,8 +9,6 @@ export function useSetProp<T extends olObject, P>(
   prop: P | undefined,
   setter: (obj: T, prop: P) => void,
 ) {
-  //todo: does the setter callback need to be memoized?
-
   // Set object properties with setters from function props.
   // Do not use props and context hooks to mutate the same properties; props
   // will override context hooks.
@@ -20,5 +18,5 @@ export function useSetProp<T extends olObject, P>(
     const obj = nullCheckRef(RefObject);
 
     setter(obj, prop);
-  }, [RefObject, prop]);
+  }, [RefObject, prop, setter]);
 }
