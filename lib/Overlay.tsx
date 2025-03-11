@@ -1,15 +1,16 @@
 import {CSSProperties, PropsWithChildren, useEffect, useRef} from "react";
 
-import olOverlay, {Positioning as olPositioning} from "ol/Overlay";
+import olOverlay, {Options as olOverlayOptions, Positioning as olPositioning} from "ol/Overlay";
 import {Coordinate as olCoordinate} from "ol/coordinate";
 
 import {useMap} from "./context/MapContext";
 import {useSetProp} from "./UseSetProp";
 import {nullCheckRef} from "./Errors";
-import {BaseObject, BaseObjectProps} from "./BaseObject.tsx";
+import {BaseObject, BaseObjectProps} from "./Object.tsx";
 
 export type OverlayProps = BaseObjectProps & {
-    composing?: olOverlay
+    composing?: olOverlay;
+    initialOptions?: olOverlayOptions;
     className?: string;
     style?: CSSProperties;
     position?: olCoordinate;
@@ -22,7 +23,7 @@ export function Overlay(props: PropsWithChildren<OverlayProps>) {
     const overlayDivRef = useRef<HTMLDivElement | null>(null);
     const overlayRef = useRef<olOverlay | null>(props.composing ?? null);
 
-    overlayRef.current ??= new olOverlay({});
+    overlayRef.current ??= new olOverlay(props.initialOptions ?? {});
 
     useEffect(() => {
         const overlay = nullCheckRef(overlayRef);

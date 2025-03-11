@@ -3,4 +3,4 @@ export * from './Layer';
 export * from './LayerGroup';
 
 export * from './BaseTile'
-export * from './TileLayer';
+export * from './Tile.tsx';

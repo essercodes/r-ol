@@ -1,12 +1,12 @@
 import {PropsWithChildren, useRef} from "react";
 
-import olDblClickDragZoom, {Options} from "ol/interaction/DblClickDragZoom";
+import olDblClickDragZoom, {Options as olDblClickDragZoomOptions} from "ol/interaction/DblClickDragZoom";
 
 import {Interaction, InteractionProps} from "./Interaction.tsx";
 
 export type DblClickDragZoomProps = InteractionProps & {
     composing?: olDblClickDragZoom;
-    initialOptOptions?: Options
+    initialOptOptions?: olDblClickDragZoomOptions
 }
 
 export function DblClickDragZoom(props: PropsWithChildren<DblClickDragZoomProps>) {

@@ -1,26 +1,25 @@
 import { PropsWithChildren, useLayoutEffect, useRef } from "react";
 
-import olLayerTile from "ol/layer/Tile";
-import { Tile as olTile } from "ol";
-import olSourceTile from "ol/source/Tile";
+import olTileLayer from "ol/layer/Tile";
+import olTile from "ol/Tile";
+import olTileSource from "ol/source/Tile";
 
 import { getElementOrder } from "../context";
 import { useSetProp } from "../UseSetProp";
 import { nullCheckRef } from "../Errors";
-import { Layer, LayerProps } from "./Layer";
+import {BaseTileLayer, BaseTileLayerProps} from "./BaseTile.tsx";
+import olLayerRenderer from "ol/renderer/Layer";
 
-type typeTileLayer = olLayerTile<olSourceTile<olTile>> | null;
-
-export type TileLayerProps = LayerProps & {
-  composing?: olLayerTile;
-  source?: olSourceTile<olTile> | null;
+export type TileLayerProps = BaseTileLayerProps<olTileSource, olLayerRenderer<olTileLayer>> & {
+  composing?: olTileLayer;
+  source?: olTileSource<olTile> | null;
 };
 
 export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
-  const tileLayerRef = useRef<typeTileLayer>(props.composing ?? null);
+  const tileLayerRef = useRef<olTileLayer | null>(props.composing ?? null);
   const tileLayerDivRef = useRef<HTMLDivElement>(null);
 
-  tileLayerRef.current ??= new olLayerTile();
+  tileLayerRef.current ??= new olTileLayer(props.initialOptions);
 
   useLayoutEffect(() => {
     if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
@@ -32,13 +31,13 @@ export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
   useSetProp(
     tileLayerRef,
     props.source,
-    (tileLayer: olLayerTile, value: olSourceTile<olTile> | null) =>
+    (tileLayer: olTileLayer, value: olTileSource<olTile> | null) =>
       tileLayer.setSource(value),
   );
 
   return (
     <div ref={tileLayerDivRef}>
-      <Layer
+      <BaseTileLayer
         composing={tileLayerRef.current}
         maxZoom={props.maxZoom}
         opacity={props.opacity}
@@ -51,7 +50,7 @@ export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
         zIndex={props.zIndex}
       >
         {props.children}
-      </Layer>
+      </BaseTileLayer>
     </div>
   );
 }

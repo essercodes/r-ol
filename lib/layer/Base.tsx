@@ -8,7 +8,7 @@ import {Extent as olExtent} from "ol/extent";
 import {BaseLayerContext, useGroupLayers} from "../context";
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
-import {BaseObject, BaseObjectProps} from "../BaseObject";
+import {BaseObject, BaseObjectProps} from "../Object.tsx";
 
 export type BaseLayerProps = BaseObjectProps & {
     composing?: olBaseLayer;

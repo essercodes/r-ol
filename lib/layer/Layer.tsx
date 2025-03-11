@@ -1,6 +1,6 @@
 import { PropsWithChildren, useRef } from "react";
 
-import olLayer from "ol/layer/Layer";
+import olLayer, {Options as olLayerOptions} from "ol/layer/Layer";
 import { Source as olSource } from "ol/source";
 
 import { useSetProp } from "../UseSetProp";
@@ -9,6 +9,7 @@ import { BaseLayer, BaseLayerProps } from "./Base";
 
 export type LayerProps = BaseLayerProps & {
   composing?: olLayer;
+  initialOptions?: olLayerOptions;
   source?: olSource;
 };
 
@@ -22,7 +23,7 @@ export function Layer(props: PropsWithChildren<LayerProps>) {
   const layerRef = useRef<olLayer | null>(props.composing ?? null);
 
   // Instantiate if not passed from composing function.
-  layerRef.current ??= new olLayer({});
+  layerRef.current ??= new olLayer(props.initialOptions ?? {});
 
   useSetProp(layerRef, props.source, (layer: olLayer, value: olSource) =>
     layer.setSource(value),

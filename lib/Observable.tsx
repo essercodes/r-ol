@@ -2,7 +2,7 @@ import { PropsWithChildren, useRef } from "react";
 
 import olObservable from "ol/Observable";
 
-import { ObservableContext } from "./context/ObservableContext";
+import { ObservableContext } from "./context";
 
 /**
  * Functional component implements Abstract base class ol/Observable
@@ -12,22 +12,19 @@ import { ObservableContext } from "./context/ObservableContext";
  * @constructor
  */
 
-export type ObservableProps<P = unknown> = P & {
+export type ObservableProps = {
   composing?: olObservable;
 };
 
-export function Observable({
-  children,
-  composing,
-}: PropsWithChildren<ObservableProps>) {
-  const observableRef = useRef<olObservable | null>(composing ?? null);
+export function Observable(props: PropsWithChildren<ObservableProps>) {
+  const observableRef = useRef<olObservable | null>(props.composing ?? null);
 
   // Instantiate if not passed from composing function.
   observableRef.current ??= new olObservable();
 
   return (
     <ObservableContext.Provider value={observableRef}>
-      {children}
+      {props.children}
     </ObservableContext.Provider>
   );
 }
