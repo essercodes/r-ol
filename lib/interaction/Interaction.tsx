@@ -1,9 +1,11 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olInteraction from 'ol/interaction/Interaction';
 
 import {BaseObject, BaseObjectProps} from "../BaseObject.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
+import {useMap} from "../context";
+import {nullCheckRef} from "../Errors.tsx";
 
 export type InteractionProps = BaseObjectProps & {
     composing?: olInteraction;
@@ -11,9 +13,23 @@ export type InteractionProps = BaseObjectProps & {
 }
 
 export function Interaction(props: PropsWithChildren<InteractionProps>) {
-    const interactionRef = useRef<olInteraction | null>(props.composing ?? null);
+    const mapInstance = useMap();
 
+    const interactionRef = useRef<olInteraction | null>(props.composing ?? null);
     interactionRef.current ??= new olInteraction();
+
+    useEffect(() => {
+        console.log(mapInstance)
+
+        const interaction = nullCheckRef(interactionRef);
+        console.log(interaction)
+
+        mapInstance.addInteraction(interaction);
+
+        return () => {
+            mapInstance.removeInteraction(interaction);
+        }
+    }, [mapInstance]);
 
     useSetProp(
         interactionRef,
