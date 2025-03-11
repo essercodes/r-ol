@@ -1,58 +1,60 @@
-import { CSSProperties, PropsWithChildren, useEffect, useRef } from "react";
+import {CSSProperties, PropsWithChildren, useEffect, useRef} from "react";
 
-import olOverlay, { Positioning as olPositioning } from "ol/Overlay";
-import { Coordinate as olCoordinate } from "ol/coordinate";
+import olOverlay, {Positioning as olPositioning} from "ol/Overlay";
+import {Coordinate as olCoordinate} from "ol/coordinate";
 
-import { useMap } from "./context/MapContext";
-import { useSetProp } from "./UseSetProp";
-import { nullCheckRef } from "./Errors";
+import {useMap} from "./context/MapContext";
+import {useSetProp} from "./UseSetProp";
+import {nullCheckRef} from "./Errors";
+import {BaseObject, BaseObjectProps} from "./BaseObject.tsx";
 
-export function Overlay({
-  children,
-  className,
-  style,
-  position,
-  positioning,
-  offset,
-}: PropsWithChildren<{
-  className?: string;
-  style?: CSSProperties;
-  position?: olCoordinate;
-  positioning?: olPositioning;
-  offset?: number[];
-}>) {
-  const mapInstance = useMap();
-  const overlayDivRef = useRef<HTMLDivElement | null>(null);
-  const overlayRef = useRef<olOverlay | null>(null);
+export type OverlayProps = BaseObjectProps & {
+    composing?: olOverlay
+    className?: string;
+    style?: CSSProperties;
+    position?: olCoordinate;
+    positioning?: olPositioning;
+    offset?: number[];
+}
 
-  overlayRef.current ??= new olOverlay({});
+export function Overlay(props: PropsWithChildren<OverlayProps>) {
+    const mapInstance = useMap();
+    const overlayDivRef = useRef<HTMLDivElement | null>(null);
+    const overlayRef = useRef<olOverlay | null>(props.composing ?? null);
 
-  useEffect(() => {
-    const overlay = nullCheckRef(overlayRef);
-    mapInstance.addOverlay(overlay);
-  }, [mapInstance]);
+    overlayRef.current ??= new olOverlay({});
 
-  useEffect(() => {
-    const overlay = nullCheckRef(overlayRef);
-    const overlayDiv = nullCheckRef(overlayDivRef);
-    overlay.setElement(overlayDiv);
-  }, []);
+    useEffect(() => {
+        const overlay = nullCheckRef(overlayRef);
+        mapInstance.addOverlay(overlay);
 
-  useSetProp(overlayRef, offset, (overlay: olOverlay, value: number[]) =>
-    overlay.setOffset(value),
-  );
-  useSetProp(overlayRef, position, (overlay: olOverlay, value: olCoordinate) =>
-    overlay.setPosition(value),
-  );
-  useSetProp(
-    overlayRef,
-    positioning,
-    (overlay: olOverlay, value: olPositioning) => overlay.setPositioning(value),
-  );
+        return () => {
+            mapInstance.removeOverlay(overlay);
+        }
+    }, [mapInstance]);
 
-  return (
-    <div ref={overlayDivRef} className={className} style={style}>
-      {children}
-    </div>
-  );
+    useEffect(() => {
+        const overlay = nullCheckRef(overlayRef);
+        const overlayDiv = nullCheckRef(overlayDivRef);
+        overlay.setElement(overlayDiv);
+    }, []);
+
+    useSetProp(overlayRef, props.offset, (overlay: olOverlay, value: number[]) =>
+        overlay.setOffset(value),
+    );
+    useSetProp(overlayRef, props.position, (overlay: olOverlay, value: olCoordinate) =>
+        overlay.setPosition(value),
+    );
+    useSetProp(
+        overlayRef,
+        props.positioning,
+        (overlay: olOverlay, value: olPositioning) => overlay.setPositioning(value),
+    );
+    return (
+        <BaseObject>
+            <div ref={overlayDivRef} className={props.className} style={props.style}>
+                {props.children}
+            </div>
+        </BaseObject>
+    );
 }
