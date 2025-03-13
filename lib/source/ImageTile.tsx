@@ -1,4 +1,4 @@
-import {useRef, PropsWithChildren} from "react";
+import {useRef, PropsWithChildren } from "react";
 
 import olImageTile from "ol/ImageTile";
 import olImageTileSource, {
@@ -26,7 +26,12 @@ export function ImageTileSource(props: PropsWithChildren<ImageTileSourceProps>) 
     )
 
     return (
-        <DataTileSource composing={imageTileSourceRef.current}>
+        <DataTileSource
+            composing={imageTileSourceRef.current}
+            attributions={props.attributions}
+            tileGridForProjectionProjection={props.tileGridForProjectionProjection}
+            tileGridForProjectionTileGrid={props.tileGridForProjectionTileGrid}
+        >
             {props.children}
         </DataTileSource>
     )
