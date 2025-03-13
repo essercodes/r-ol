@@ -14,7 +14,10 @@ export function TileSource(props: PropsWithChildren<TileSourceProps>) {
     tileSourceRef.current ??= new olTileSource(props.initialOptions ?? {})
 
     return (
-        <Source composing={tileSourceRef.current}>
+        <Source
+            composing={tileSourceRef.current}
+            attributions={props.attributions}
+        >
             {props.children}
         </Source>
     )

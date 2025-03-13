@@ -19,19 +19,27 @@ pnpm add @essercodes/r-ol ol
 
 ```jsx
 import React from 'react';
-import { Map, View, TileLayer, OsmSource, TargetDiv } from '@essercodes/r-ol';
+import { Map, View, TileLayer, TargetDiv } from '@essercodes/r-ol';
 import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
+const lonLat = fromLonLat([-89.38, 43.07])
+
 function MyMap() {
-  return (
-       <Map>
-          <TargetDiv style={{height: '100svh', width: '100svh'}}/>
-          <View zoom={12} center={fromLonLat([-89.38, 43.07])}/>
-          <TileLayer>
-             <OsmSource/>
-          </TileLayer>
-       </Map>
-  );
+    return (
+        <Map>
+            <TargetDiv style={{height: '100svh', width: '100svh'}}/>
+            <View zoom={12} center={lonLat}/>
+            <Overlay position={lonLat}>
+                    <h1 style={{color: 'black'}}>HELLO WORLD</h1>
+                </Overlay>
+            <TileLayer>
+                 <ImageTileSource 
+                     url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
+                     attributions={"Map data from OpenStreetMap"}
+                />
+            </TileLayer>
+        </Map>
+    );
 }
 
 export default MyMap;
@@ -40,9 +48,9 @@ export default MyMap;
 ## Important Notes
 
 1. Remember to import OpenLayers CSS in your application:
-   ```jsx
-   import 'ol/ol.css';
-   ```
+```jsx
+import 'ol/ol.css';
+```
 
 2. This library uses OpenLayers as a peer dependency, so you need to install it separately.
 
@@ -54,7 +62,7 @@ The main container for your map.
 
 ```jsx
 <Map>
-  {/* Map components */}
+    {/* Map components */}
 </Map>
 ```
 
@@ -64,10 +72,19 @@ Controls the map view.
 
 ```jsx
 <View 
-  center={[longitude, latitude]} 
-  zoom={8} 
-  rotation={0} 
+    center={fromLonLat([longitude, latitude])} 
+    zoom={zoom} 
 />
+```
+
+### LayerGroup
+
+Layer component that contains other layers.
+
+```jsx
+<LayerGroup>
+    {/*Layer Components*/}
+</LayerGroup>
 ```
 
 ### TileLayer
@@ -76,8 +93,9 @@ A standard tile layer.
 
 ```jsx
 <TileLayer>
-  <OsmSource />
+    {/* Source Component */}
 </TileLayer>
+
 ```
 
 ### TargetDiv
@@ -85,25 +103,22 @@ A standard tile layer.
 Creates a div element that serves as the map container.
 
 ```jsx
-<TargetDiv className="custom-map-class" />
+<TargetDiv style={{height: '100svh', width: '100svh'}} />
 ```
 
 ## Available Sources
 
-### OsmSource
-
-OpenStreetMap tile source.
-
+### ImageTileSource 
 ```jsx
-<OsmSource />
+<ImageTileSource 
+     url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
+     attributions={"Map data from OpenStreetMap"}
+/>
 ```
 
-### XYZ
-
-XYZ tile source.
-
+### VectorSource
 ```jsx
-<XYZ url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
 ```
 
 ## License

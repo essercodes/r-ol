@@ -5,9 +5,12 @@ import olSource, {Options as olSourceOptions} from 'ol/source/Source.js';
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
 import {useLayerSource} from "../context";
 import {nullCheckRef} from "../Errors.tsx";
+import {AttributionLike as olAttributionLike} from "ol/source/Source";
+import {useSetProp} from "../UseSetProp.tsx";
 
 export type SourceProps = BaseObjectProps & {
     composing?: olSource;
+    attributions?: olAttributionLike;
     initialOptions?: olSourceOptions;
 }
 
@@ -19,8 +22,16 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     useEffect(() => {
         const source= nullCheckRef(sourceRef);
         setLayerSource(source);
+        console.log(source);
     }, [setLayerSource]);
-    
+
+    useSetProp(
+        sourceRef,
+        props.attributions,
+        (imageTileSource: olSource, value: olAttributionLike) =>
+            imageTileSource.setAttributions(value),
+    );
+
     return (
         <BaseObject composing={sourceRef.current}>
             {props.children}

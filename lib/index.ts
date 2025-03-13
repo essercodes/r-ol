@@ -6,3 +6,4 @@ export * from "./Object.tsx";
 export * from "./UseInstanceState";
 export * from "./UseSetProp";
 export * from "./View";
+export * from "./Errors.tsx"
