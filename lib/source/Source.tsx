@@ -22,7 +22,6 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     useEffect(() => {
         const source= nullCheckRef(sourceRef);
         setLayerSource(source);
-        console.log(source);
     }, [setLayerSource]);
 
     useSetProp(
