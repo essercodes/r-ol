@@ -26,7 +26,7 @@ export type BaseLayerProps = BaseObjectProps & {
 export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     const baseDivRef = useRef<HTMLDivElement>(null);
     const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
-    const [, setParentLayers] = useLayerGroupArray();
+    const [, setLayerGroupArray] = useLayerGroupArray();
     const group = useLayerGroup();
 
     // Instantiate if not passed from composing function.
@@ -38,7 +38,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
         const uid = getUid(baseLayer);
         let layerAdded = false;
 
-        setParentLayers((prev: LayersArray) => {
+        setLayerGroupArray((prev: LayersArray) => {
             const newParentLayers = new olCollection<olBaseLayer>(prev);
             if (prev.some(l => getUid(l) === uid)) {
                 return newParentLayers;
