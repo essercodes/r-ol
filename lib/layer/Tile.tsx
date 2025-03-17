@@ -1,12 +1,10 @@
-import { PropsWithChildren, useLayoutEffect, useRef } from "react";
+import { PropsWithChildren, useRef } from "react";
 
 import olTileLayer from "ol/layer/Tile";
 import olTile from "ol/Tile";
 import olTileSource from "ol/source/Tile";
 
-import { getElementOrder } from "../context";
 import { useSetProp } from "../UseSetProp";
-import { nullCheckRef } from "../Errors";
 import {BaseTileLayer, BaseTileLayerProps} from "./BaseTile.tsx";
 import olLayerRenderer from "ol/renderer/Layer";
 
@@ -20,13 +18,6 @@ export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
   const tileLayerDivRef = useRef<HTMLDivElement>(null);
 
   tileLayerRef.current ??= new olTileLayer(props.initialOptions);
-
-  useLayoutEffect(() => {
-    if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
-    const tileLayer = nullCheckRef(tileLayerRef);
-    const tileLayerDiv = nullCheckRef(tileLayerDivRef);
-    tileLayer.setZIndex(getElementOrder(tileLayerDiv));
-  }, [props.composing]);
 
   useSetProp(
     tileLayerRef,
