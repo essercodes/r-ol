@@ -1,11 +1,11 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useLayoutEffect, useRef} from "react";
 
 import {Collection as olCollection} from "ol";
 import olLayerTile from "ol/layer/Tile";
 import olBaseLayer from "ol/layer/Base";
 import {Extent as olExtent} from "ol/extent";
 
-import {BaseLayerContext, LayersArray, useGroupLayers} from "../context";
+import {BaseLayerContext, getElementOrder, LayersArray, useGroupLayers} from "../context";
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
@@ -24,6 +24,7 @@ export type BaseLayerProps = BaseObjectProps & {
 };
 
 export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
+    const baseDivRef = useRef<HTMLDivElement>(null);
     const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
     const [, setParentLayers] = useGroupLayers();
 
@@ -52,6 +53,14 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Explicitly set the zIndex based on component order.
+    useEffect(() => {
+        if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
+        const baseLayerDiv = nullCheckRef(baseDivRef);
+        const baseLayer = nullCheckRef(baseLayerRef);
+        baseLayer.setZIndex(getElementOrder(baseLayerDiv));
+    }, [props.composing]);
 
     useSetProp(
         baseLayerRef,
@@ -97,10 +106,12 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     );
 
     return (
-        <BaseObject composing={baseLayerRef.current} debug={props.debug}>
-            <BaseLayerContext.Provider value={baseLayerRef}>
-                {props.children}
-            </BaseLayerContext.Provider>
-        </BaseObject>
+        <div ref={baseDivRef}>
+            <BaseObject composing={baseLayerRef.current} debug={props.debug}>
+                <BaseLayerContext.Provider value={baseLayerRef}>
+                    {props.children}
+                </BaseLayerContext.Provider>
+            </BaseObject>
+        </div>
     );
 }
