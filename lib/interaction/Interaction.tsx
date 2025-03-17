@@ -35,7 +35,7 @@ export function Interaction(props: PropsWithChildren<InteractionProps>) {
     )
 
     return (
-        <BaseObject composing={interactionRef.current}>
+        <BaseObject composing={interactionRef.current} debug={props.debug}>
             {props.children}
         </BaseObject>
     )

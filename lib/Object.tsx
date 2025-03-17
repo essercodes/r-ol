@@ -24,7 +24,7 @@ export function BaseObject(props: PropsWithChildren<BaseObjectProps>) {
     baseObjectRef.current ??= new olBaseObject();
 
     return (
-        <Observable {...props}>
+        <Observable composing={baseObjectRef.current} debug={props.debug}>
             {props.children}
         </Observable>
     );

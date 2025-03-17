@@ -97,7 +97,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     );
 
     return (
-        <BaseObject composing={baseLayerRef.current}>
+        <BaseObject composing={baseLayerRef.current} debug={props.debug}>
             <BaseLayerContext.Provider value={baseLayerRef}>
                 {props.children}
             </BaseLayerContext.Provider>

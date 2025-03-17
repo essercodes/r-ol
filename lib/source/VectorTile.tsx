@@ -31,6 +31,7 @@ export function VectorTile(props: PropsWithChildren<VectorTileProps>) {
     return (
         <TileSource
             composing={vectorTileSourceRef.current}
+            debug={props.debug}
             attributions={props.attributions}
         >
             {props.children}

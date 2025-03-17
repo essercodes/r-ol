@@ -47,6 +47,7 @@ export function BaseVectorLayer<
     return (
         <Layer
             composing={baseVectorLayerRef.current}
+            debug={props.debug}
             maxZoom={props.maxZoom}
             opacity={props.opacity}
             extent={props.extent}

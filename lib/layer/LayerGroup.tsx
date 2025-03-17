@@ -35,6 +35,7 @@ export function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
     <div ref={layerGroupDivRef}>
       <BaseLayer
         composing={layerGroupRef.current}
+        debug={props.debug}
         maxZoom={props.maxZoom}
         opacity={props.opacity}
         extent={props.extent}
