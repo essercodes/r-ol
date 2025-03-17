@@ -3,9 +3,9 @@ import {PropsWithChildren, useRef} from "react";
 import olLayerGroup from "ol/layer/Group";
 
 import {
-    GroupContext,
-    typeGroup,
-    typeGroupRef,
+    LayerGroupContext,
+    typeLayerGroup,
+    typeLayerGroupRef,
 } from "../context";
 import {BaseLayer, BaseLayerProps} from "./Base";
 
@@ -14,7 +14,7 @@ export type LayerGroupProps = BaseLayerProps & {
 };
 
 export function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
-    const layerGroupRef: typeGroupRef = useRef<typeGroup>(
+    const layerGroupRef: typeLayerGroupRef = useRef<typeLayerGroup>(
         props.composing ?? null,
     );
 
@@ -34,9 +34,9 @@ export function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
             visible={props.visible}
             zIndex={props.zIndex}
         >
-            <GroupContext.Provider value={layerGroupRef}>
+            <LayerGroupContext.Provider value={layerGroupRef}>
                 {props.children}
-            </GroupContext.Provider>
+            </LayerGroupContext.Provider>
         </BaseLayer>
     );
 }

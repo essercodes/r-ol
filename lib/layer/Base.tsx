@@ -5,7 +5,7 @@ import olLayerTile from "ol/layer/Tile";
 import olBaseLayer from "ol/layer/Base";
 import {Extent as olExtent} from "ol/extent";
 
-import {BaseLayerContext, getElementOrder, LayersArray, useGroup, useGroupLayers} from "../context";
+import {BaseLayerContext, LayersArray, useLayerGroup, useLayerGroupArray} from "../context";
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
@@ -26,8 +26,8 @@ export type BaseLayerProps = BaseObjectProps & {
 export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     const baseDivRef = useRef<HTMLDivElement>(null);
     const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
-    const [, setParentLayers] = useGroupLayers();
-    const group = useGroup();
+    const [, setParentLayers] = useLayerGroupArray();
+    const group = useLayerGroup();
 
     // Instantiate if not passed from composing function.
     baseLayerRef.current ??= new olLayerTile();
@@ -117,4 +117,17 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
             </BaseObject>
         </div>
     );
+}
+
+
+/**
+ * Returns the index of an element in relation to its siblings. If the element
+ * has no parent it returns 0.
+ * @param element
+ */
+function getElementOrder(element: HTMLElement) {
+  const parent = element?.parentNode;
+  if (!parent) return 0;
+
+  return Array.from(parent.children).indexOf(element);
 }
