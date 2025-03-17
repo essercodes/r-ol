@@ -138,6 +138,129 @@ Creates a div element that serves as the map container.
 />
 ```
 
+## Hooks
+Many component that represents an OpenLayers objects. If a represented object inherits from a 
+parent, then you can use the hooks provided by the component representing the parent. For example, 
+all components can use Observable's component hooks because all objects inherit from Observable.
+
+Hooks that return an array follow the `useState` convention and "name state variables like 
+\[something, setSomething\] using array destructuring." Like `useState` 'something' returns an 
+immutable snapshot, and setSomething accepts a value or and updater function. The updater function
+will immediately pull the current value from the object.
+
+Component props will override properties set in hooks.
+
+https://react.dev/reference/react/useState
+
+
+### Base Layer
+
+Hooks for the closest parent component `BaseLayer` or any component derived from it.
+
+```jsx
+import {
+    useBaseLayer, useBaseLayerMaxResolution, useBaseLayerMaxZoom, useBaseLayerMinResolution, 
+    useBaseLayerMinZoom, useBaseLayerOpacity, useBaseLayerVisible, useBaseLayerZIndex 
+} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent BaseLayer component
+const baseLayer = useBaseLayer(); 
+
+// Set properites of the closest parent BaseLayer component
+const [maxResolution, setMaxResolution] = useBaseLayerMaxResolution();
+const [maxZoom, setMaxZoom] = useBaseLayerMaxZoom();
+const [minResolution, setMinResolution] = useBaseLayerMinResolution();
+const [minZoom, setMinZoom] = useBaseLayerMinZoom();
+const [opacity, setOpacity] = useBaseLayerOpacity();
+const [visibility, setVisibility] = useBaseLayerVisible();
+const [zIndex, setZIndex] = useBaseLayerZIndex();
+```
+
+### Layer
+
+Hooks for the closest parent component `Layer` or any component derived from it.
+
+```jsx
+import {useLayer, useLayerSource} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent Layer component
+const baseLayer = useLayer(); 
+
+// Set properites of the closest parent Layer component
+const [source, setSource] = useLayerSource();
+```
+
+### LayerGroup
+
+Hooks for the closest parent component `LayerGroup` or any component derived from it. If there is no
+parent `LayerGroup` component this will represent the `Map` components layer group.
+
+```jsx
+import {useLayerGroup, useLayerGroupArray} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent LayerGroup component
+const baseLayer = useLayer();
+
+// Set properites of the closest parent LayerGroup component
+const [layerGroupArray, setLayerGroupArray] = useLayerGroupArray();
+```
+
+### Map
+
+Hooks for the closest parent component `Map` or any component derived from it.
+
+```jsx
+import {useMap, useMapLayerGroup, useMapSize, useMapTarget, useMapView} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent Map component
+const map = useMap();
+
+// Set properites of the closest parent Map component
+const [mapLayerGroup, setMapLayerGroup] = useMapLayerGroup();
+const [size, setSize] = useMapSize();
+const [target, setTarget] = useMapTarget();
+const [view, setView] = useMapView();
+```
+
+### Observable
+
+Hooks for the closest parent component `Observable` or any component derived from it.
+
+```jsx
+import {useObservable, useRevision} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent LayerGroup component
+const observable = useObservable();
+
+// Get the revision count, and call the changed() function to increment the revision count.
+const [revision, changed] = useRevision();
+```
+
+### VectorSource
+
+Hooks for the closest parent component `VectorSource` or any component derived from it.
+
+```jsx
+import {useVectorSource} from "@essercodes/r-ol/context";
+
+// Access the object represented by the closest parent VectorSource component.
+const vectorSource = useVectorSource();
+```
+
+### View
+
+Hooks for the closest parent component `View` or any component derived from it.
+
+```jsx
+// Access the object represented by the closest parent View component
+const view = useView();
+
+// Set properites of the closest parent View component
+const [viewCenter, setViewCenter] = useViewCenter();
+const [viewResolution, setViewResolution] = useViewResolution();
+const [viewRotation, setViewRotation] = useViewRotation();
+```
+
 ## License
 
 MIT
