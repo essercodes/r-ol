@@ -97,7 +97,16 @@ A standard tile layer.
 </TileLayer>
 
 ```
+### VectorTileLayer
 
+A standard vector tile layer.
+
+```jsx
+<VectorTileLayer>
+    <VectorTileSource />
+</VectorTileLayer>
+
+```
 ### TargetDiv
 
 Creates a div element that serves as the map container.
@@ -118,7 +127,15 @@ Creates a div element that serves as the map container.
 
 ### VectorSource
 ```jsx
-
+<VectorTileSource
+    attributions={
+        '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
+        '© <a href="https://www.openstreetmap.org/copyright">' +
+        'OpenStreetMap contributors</a>'}
+    url={'https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/' +
+        '{z}/{x}/{y}.mvt?access_token=' + mapbox_api_key}
+    initialOptions={{format: new MVT()}}
+/>
 ```
 
 ## License
