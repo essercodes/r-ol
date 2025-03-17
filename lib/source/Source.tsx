@@ -32,7 +32,7 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     );
 
     return (
-        <BaseObject composing={sourceRef.current}>
+        <BaseObject composing={sourceRef.current} debug={props.debug}>
             {props.children}
         </BaseObject>
     )

@@ -52,7 +52,7 @@ export function Overlay(props: PropsWithChildren<OverlayProps>) {
         (overlay: olOverlay, value: olPositioning) => overlay.setPositioning(value),
     );
     return (
-        <BaseObject>
+        <BaseObject composing={overlayRef.current} debug={props.debug}>
             <div ref={overlayDivRef} className={props.className} style={props.style}>
                 {props.children}
             </div>

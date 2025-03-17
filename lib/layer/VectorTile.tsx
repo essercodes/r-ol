@@ -49,6 +49,7 @@ export function VectorTileLayer<
     return (
         <BaseVectorLayer
             composing={vectorTileLayerRef.current}
+            debug={props.debug}
             maxZoom={props.maxZoom}
             opacity={props.opacity}
             extent={props.extent}

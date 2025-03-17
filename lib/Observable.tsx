@@ -1,4 +1,4 @@
-import { PropsWithChildren, useRef } from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olObservable from "ol/Observable";
 
@@ -14,6 +14,7 @@ import { ObservableContext } from "./context";
 
 export type ObservableProps = {
   composing?: olObservable;
+  debug?: boolean;
 };
 
 export function Observable(props: PropsWithChildren<ObservableProps>) {
@@ -21,6 +22,10 @@ export function Observable(props: PropsWithChildren<ObservableProps>) {
 
   // Instantiate if not passed from composing function.
   observableRef.current ??= new olObservable();
+
+  useEffect(() => {
+      if (props.debug) console.log(observableRef.current);
+  }, [props.debug]);
 
   return (
     <ObservableContext.Provider value={observableRef}>

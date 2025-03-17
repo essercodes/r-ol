@@ -39,6 +39,7 @@ export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
     <div ref={tileLayerDivRef}>
       <BaseTileLayer
         composing={tileLayerRef.current}
+        debug={props.debug}
         maxZoom={props.maxZoom}
         opacity={props.opacity}
         extent={props.extent}

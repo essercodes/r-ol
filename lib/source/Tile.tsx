@@ -16,6 +16,7 @@ export function TileSource(props: PropsWithChildren<TileSourceProps>) {
     return (
         <Source
             composing={tileSourceRef.current}
+            debug={props.debug}
             attributions={props.attributions}
         >
             {props.children}

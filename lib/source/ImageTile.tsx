@@ -28,6 +28,7 @@ export function ImageTileSource(props: PropsWithChildren<ImageTileSourceProps>) 
     return (
         <DataTileSource
             composing={imageTileSourceRef.current}
+            debug={props.debug}
             attributions={props.attributions}
             tileGridForProjectionProjection={props.tileGridForProjectionProjection}
             tileGridForProjectionTileGrid={props.tileGridForProjectionTileGrid}

@@ -35,6 +35,7 @@ export function BaseTileLayer<
     return (
         <Layer
             composing={baseTileLayerRef.current}
+            debug={props.debug}
             source={props.source}
             maxZoom={props.maxZoom}
             opacity={props.opacity}

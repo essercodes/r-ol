@@ -64,7 +64,7 @@ export function Map(props: PropsWithChildren<MapProps>) {
   );
 
   return (
-    <BaseObject composing={props.composing}>
+    <BaseObject composing={mapInstanceRef.current} debug={props.debug}>
       <MapContext.Provider value={mapInstanceRef}>
         <GroupContext.Provider value={mapLayerGroupRef}>
           {props.children}

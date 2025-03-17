@@ -32,6 +32,7 @@ export function Layer(props: PropsWithChildren<LayerProps>) {
   return (
     <BaseLayer
       composing={layerRef.current}
+      debug={props.debug}
       maxZoom={props.maxZoom}
       opacity={props.opacity}
       extent={props.extent}

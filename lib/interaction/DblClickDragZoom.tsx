@@ -15,7 +15,7 @@ export function DblClickDragZoom(props: PropsWithChildren<DblClickDragZoomProps>
     dblClickDragZoomRef.current ??= new olDblClickDragZoom(props.initialOptOptions);
 
     return (
-        <Interaction composing={dblClickDragZoomRef.current}>
+        <Interaction composing={dblClickDragZoomRef.current} debug={props.debug}>
             {props.children}
         </Interaction>
     )

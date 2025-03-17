@@ -30,7 +30,11 @@ export function DataTileSource<TileType extends olTile>(props: PropsWithChildren
     }, [props.tileGridForProjectionProjection, props.tileGridForProjectionTileGrid]);
 
     return (
-        <TileSource composing={dataTileSourceRef.current} attributions={props.attributions}>
+        <TileSource
+            composing={dataTileSourceRef.current}
+            debug={props.debug}
+            attributions={props.attributions}
+        >
             {props.children}
         </TileSource>
     )

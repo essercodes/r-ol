@@ -33,7 +33,11 @@ export function VectorSource(props: PropsWithChildren<VectorSourceProps>) {
         (vectorSource: olVectorSource, value: string | olFeatureUrlFunction) => vectorSource.setUrl(value),
     )
     return (
-        <Source composing={vectorSourceRef.current} attributions={props.attributions}>
+        <Source
+            composing={vectorSourceRef.current}
+            debug={props.debug}
+            attributions={props.attributions}
+        >
             <VectorSourceContext.Provider value={vectorSourceRef}>
                 {props.children}
             </VectorSourceContext.Provider>
