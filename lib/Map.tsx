@@ -8,9 +8,9 @@ import olBaseLayer from "ol/layer/Base";
 import { ViewOptions as olViewOptions } from "ol/View";
 
 import {
-  GroupContext,
-  typeGroup,
-  typeGroupContext,
+  LayerGroupContext,
+  typeLayerGroup,
+  typeLayerGroupContext,
 } from "./context";
 import { MapContext, typeMap } from "./context";
 import { useSetProp } from "./UseSetProp";
@@ -28,7 +28,7 @@ export type MapProps = BaseObjectProps & {
 
 export function Map(props: PropsWithChildren<MapProps>) {
   const mapInstanceRef = useRef<typeMap>(props.composing ?? null);
-  const mapLayerGroupRef: typeGroupContext = useRef<typeGroup>(null);
+  const mapLayerGroupRef: typeLayerGroupContext = useRef<typeLayerGroup>(null);
 
   mapInstanceRef.current ??= new olMap(props.initialOptions);
   mapLayerGroupRef.current ??= mapInstanceRef.current.getLayerGroup();
@@ -66,9 +66,9 @@ export function Map(props: PropsWithChildren<MapProps>) {
   return (
     <BaseObject composing={mapInstanceRef.current} debug={props.debug}>
       <MapContext.Provider value={mapInstanceRef}>
-        <GroupContext.Provider value={mapLayerGroupRef}>
+        <LayerGroupContext.Provider value={mapLayerGroupRef}>
           {props.children}
-        </GroupContext.Provider>
+        </LayerGroupContext.Provider>
       </MapContext.Provider>
     </BaseObject>
   );
