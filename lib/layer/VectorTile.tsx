@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olVectorTileLayer, {Options as olVectorTileLayerOptions} from 'ol/layer/VectorTile.js';
 import olVectorTile from 'ol/source/VectorTile.js';
@@ -8,7 +8,6 @@ import {BackgroundColor as olBackgroundColor} from "ol/layer/Base";
 
 import {BaseVectorLayer, BaseVectorLayerProps} from "./BaseVector";
 import {useSetProp} from "../UseSetProp.tsx";
-import {nullCheckRef} from "../Errors.tsx";
 
 export type VectorTileLayerProps<
     VectorTileSourceType extends olVectorTile<FeatureType>,
@@ -28,11 +27,6 @@ export function VectorTileLayer<
     const vectorTileLayerRef = useRef<olVectorTileLayer | null>(props.composing ?? null);
 
     vectorTileLayerRef.current ??= new olVectorTileLayer(props.initialOptions);
-
-    useEffect(() => {
-        const vectorTileLayer = nullCheckRef(vectorTileLayerRef);
-        console.log(vectorTileLayer)
-    }, []);
 
     useSetProp(
         vectorTileLayerRef,

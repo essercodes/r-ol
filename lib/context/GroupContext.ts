@@ -20,7 +20,7 @@ export function useGroup() {
   return nullCheckContext(useContext(GroupContext));
 }
 
-type LayersArray = olLayer<olSource, olRendererLayer<olLayer>>[];
+export type LayersArray = olLayer<olSource, olRendererLayer<olLayer>>[];
 
 export function useGroupLayers() {
   const group = useGroup();

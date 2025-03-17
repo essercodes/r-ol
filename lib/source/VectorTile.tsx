@@ -1,10 +1,9 @@
-import {useRef, PropsWithChildren, useEffect} from "react";
+import {useRef, PropsWithChildren} from "react";
 
 import olVectorTileSource, {Options as olVectorTileSourceOptions} from "ol/source/VectorTile";
 
 import {TileSource, TileSourceProps} from "./Tile.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
-import {nullCheckRef} from "../Errors.tsx";
 
 export type VectorTileProps = TileSourceProps & {
     composing?: olVectorTileSource;
@@ -14,13 +13,8 @@ export type VectorTileProps = TileSourceProps & {
 }
 
 export function VectorTile(props: PropsWithChildren<VectorTileProps>) {
-    const vectorTileSourceRef= useRef<olVectorTileSource | null>(props.composing ?? null);
+    const vectorTileSourceRef = useRef<olVectorTileSource | null>(props.composing ?? null);
     vectorTileSourceRef.current ??= new olVectorTileSource(props.initialOptions ?? {});
-
-    useEffect(() => {
-        const vectorTileSource = nullCheckRef(vectorTileSourceRef)
-        console.log(vectorTileSource);
-    }, []);
 
     useSetProp(
         vectorTileSourceRef,

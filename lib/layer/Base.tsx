@@ -5,7 +5,7 @@ import olLayerTile from "ol/layer/Tile";
 import olBaseLayer from "ol/layer/Base";
 import {Extent as olExtent} from "ol/extent";
 
-import {BaseLayerContext, useGroupLayers} from "../context";
+import {BaseLayerContext, LayersArray, useGroupLayers} from "../context";
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
@@ -25,7 +25,7 @@ export type BaseLayerProps = BaseObjectProps & {
 
 export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
-    const [parentLayers, setParentLayers] = useGroupLayers();
+    const [, setParentLayers] = useGroupLayers();
 
     // Instantiate if not passed from composing function.
     baseLayerRef.current ??= new olLayerTile();
@@ -34,16 +34,20 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     useEffect(() => {
         const baseLayer = nullCheckRef(baseLayerRef);
 
-        const newParentLayers = new olCollection<olBaseLayer>();
-        newParentLayers.extend(parentLayers);
-        newParentLayers.push(baseLayer);
-        setParentLayers(newParentLayers);
+        setParentLayers((prev: LayersArray) => {
+            const newParentLayers = new olCollection<olBaseLayer>();
+            newParentLayers.extend(prev);
+            newParentLayers.push(baseLayer);
+            return newParentLayers
+        });
 
         return () => {
-            const newParentLayers = new olCollection<olBaseLayer>();
-            newParentLayers.extend(parentLayers);
-            newParentLayers.remove(baseLayer);
-            setParentLayers(newParentLayers);
+            setParentLayers((prev) => {
+                const newParentLayers = new olCollection<olBaseLayer>();
+                newParentLayers.extend(prev);
+                newParentLayers.remove(baseLayer);
+                return newParentLayers;
+            });
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
