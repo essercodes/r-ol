@@ -54,7 +54,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Explicitly set the zIndex based on component order.
+    // Explicitly set the zIndex based on component order. Overridden by prop.
     useEffect(() => {
         if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
         const baseLayerDiv = nullCheckRef(baseDivRef);
