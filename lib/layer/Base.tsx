@@ -1,11 +1,11 @@
 import {PropsWithChildren, useEffect, useRef} from "react";
 
-import {Collection as olCollection} from "ol";
+import {Collection as olCollection, getUid} from "ol";
 import olLayerTile from "ol/layer/Tile";
 import olBaseLayer from "ol/layer/Base";
 import {Extent as olExtent} from "ol/extent";
 
-import {BaseLayerContext, getElementOrder, LayersArray, useGroupLayers} from "../context";
+import {BaseLayerContext, getElementOrder, LayersArray, useGroup, useGroupLayers} from "../context";
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
@@ -27,6 +27,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     const baseDivRef = useRef<HTMLDivElement>(null);
     const baseLayerRef = useRef<olBaseLayer | null>(props.composing ?? null);
     const [, setParentLayers] = useGroupLayers();
+    const group = useGroup();
 
     // Instantiate if not passed from composing function.
     baseLayerRef.current ??= new olLayerTile();
@@ -34,27 +35,28 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     // Add to parent layer group.
     useEffect(() => {
         const baseLayer = nullCheckRef(baseLayerRef);
+        const uid = getUid(baseLayer);
+        let layerAdded = false;
 
         setParentLayers((prev: LayersArray) => {
-            const newParentLayers = new olCollection<olBaseLayer>();
-            newParentLayers.extend(prev);
+            const newParentLayers = new olCollection<olBaseLayer>(prev);
+            if (prev.some(l => getUid(l) === uid)) {
+                return newParentLayers;
+            }
             newParentLayers.push(baseLayer);
-            return newParentLayers
+            layerAdded = true;
+            return newParentLayers;
         });
 
         return () => {
-            setParentLayers((prev) => {
-                const newParentLayers = new olCollection<olBaseLayer>();
-                newParentLayers.extend(prev);
-                newParentLayers.remove(baseLayer);
-                return newParentLayers;
-            });
+            if (!layerAdded) return;
+            group.getLayers().remove(baseLayer);
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Explicitly set the zIndex based on component order. Overridden by prop.
+    // Explicitly set the zIndex based on component order.
     useEffect(() => {
         if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
         const baseLayerDiv = nullCheckRef(baseDivRef);
