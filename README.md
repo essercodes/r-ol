@@ -19,7 +19,9 @@ pnpm add @essercodes/r-ol ol
 
 ```jsx
 import React from 'react';
+import { fromLonLat } from 'ol/proj';
 import { Map, View, TileLayer, TargetDiv } from '@essercodes/r-ol';
+
 import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
 const lonLat = fromLonLat([-89.38, 43.07])
@@ -27,11 +29,11 @@ const lonLat = fromLonLat([-89.38, 43.07])
 function MyMap() {
     return (
         <Map>
-            <TargetDiv style={{height: '100svh', width: '100svh'}}/>
+            <TargetDiv style={{height: '100svh', width: '100svw'}}/>
             <View zoom={12} center={lonLat}/>
             <Overlay position={lonLat}>
-                    <h1 style={{color: 'black'}}>HELLO WORLD</h1>
-                </Overlay>
+                <h1 style={{color: 'black'}}>HELLO WORLD</h1>
+            </Overlay>
             <TileLayer>
                  <ImageTileSource 
                      url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
@@ -112,7 +114,16 @@ A standard vector tile layer.
 Creates a div element that serves as the map container.
 
 ```jsx
-<TargetDiv style={{height: '100svh', width: '100svh'}} />
+<TargetDiv style={{height: '100svh', width: '100svw'}} />
+```
+
+### Overlay
+
+Adds html elements to the map at a coordinate.
+```jsx
+<Overlay position={fromLonLat([lon, lat])}>
+    {/* Displayed Element */}
+</Overlay>
 ```
 
 ## Available Sources
@@ -133,18 +144,18 @@ Creates a div element that serves as the map container.
         '© <a href="https://www.openstreetmap.org/copyright">' +
         'OpenStreetMap contributors</a>'}
     url={'https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/' +
-        '{z}/{x}/{y}.mvt?access_token=' + mapbox_api_key}
+        '{z}/{x}/{y}.mvt?access_token=' + YOUR_MAPBOX_API_KEY}
     initialOptions={{format: new MVT()}}
 />
 ```
 
 ## Hooks
-Many component that represents an OpenLayers objects. If a represented object inherits from a 
-parent, then you can use the hooks provided by the component representing the parent. For example, 
-all components can use Observable's component hooks because all objects inherit from Observable.
+Many components represent OpenLayers objects. If a represented object inherits from a parent, then 
+you can use the hooks provided by the component representing the parent. For example, all components 
+can use Observable's component hooks because all objects inherit from Observable.
 
 Hooks that return an array follow the `useState` convention and "name state variables like 
-\[something, setSomething\] using array destructuring." Like `useState` 'something' returns an 
+[something, setSomething] using array destructuring." Like `useState` 'something' returns an 
 immutable snapshot, and setSomething accepts a value or and updater function. The updater function
 will immediately pull the current value from the object.
 
@@ -199,7 +210,7 @@ parent `LayerGroup` component this will represent the `Map` components layer gro
 import {useLayerGroup, useLayerGroupArray} from "@essercodes/r-ol/context";
 
 // Access the object represented by the closest parent LayerGroup component
-const baseLayer = useLayer();
+const layerGroup = useLayerGroup();
 
 // Set properites of the closest parent LayerGroup component
 const [layerGroupArray, setLayerGroupArray] = useLayerGroupArray();
@@ -252,6 +263,8 @@ const vectorSource = useVectorSource();
 Hooks for the closest parent component `View` or any component derived from it.
 
 ```jsx
+import {useView, useViewCenter, useViewResolution, useViewRotation} from "@essercodes/r-ol/context";
+
 // Access the object represented by the closest parent View component
 const view = useView();
 
