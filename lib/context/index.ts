@@ -3,4 +3,4 @@ export * from "./LayerGroupContext.ts";
 export * from "./MapContext";
 export * from "./ViewContext";
 export * from "./BaseLayerContext";
-export * from "./TileLayerContext";
+export * from "./LayerContext.ts";
