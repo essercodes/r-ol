@@ -55,7 +55,7 @@ export function View(props: PropsWithChildren<ViewProps>) {
     );
 
     return (
-        <BaseObject composing={viewRef.current}> debug={props.debug}
+        <BaseObject composing={viewRef.current} debug={props.debug}>
             <ViewContext.Provider value={viewRef}>
                 {props.children}
             </ViewContext.Provider>

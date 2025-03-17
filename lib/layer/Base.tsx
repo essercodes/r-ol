@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useLayoutEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import {Collection as olCollection} from "ol";
 import olLayerTile from "ol/layer/Tile";
