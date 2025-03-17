@@ -3,12 +3,24 @@ import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import olObservable from "ol/Observable";
 import { Listener } from "ol/events";
 
+/**
+ * The useInstanceState hook uses useSyncExternalStore to create immutable snapshots when OpenLayers
+ * Object properties are updated. The hook returns an array with the immutable snapshot and setter
+ * function. The setter function accepts a value, or function that will immediately pull the current
+ * value from the instance.
+ * @param instance the instance of the object the hook will reference and set.
+ * @param eventType a name of the event that updates the immutable snapshot.
+ * @param stateGetter the function that gets the value from instance. Must be passed with
+ *      Function.prototype.call() the callback will lose context when passed.
+ * @param stateSetter the optional function that sets the value in the instance. Must be pass with
+ *      Function.prototype.call() the callback will lose context when passed.
+ * @param initialState sets the initial state of the instance property.
+ */
 export function useInstanceState<O extends olObservable, T1, T2 = T1>(
     instance: O,
     eventType: string,
     stateGetter: (instance: O) => T1,
     stateSetter: (instance: O, state: T2) => void,
-    // setState: (newState: ((prev: T1) => T2) | T2) => void,
     initialState?: T2,
 ): [T1, (state: ((prev: T1) => T2) | T2) => void] {
     const previousSnapshotRef = useRef<[number, T1]>(undefined);
