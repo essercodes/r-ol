@@ -1,10 +1,8 @@
 import { RefObject, useEffect } from "react";
 
-import olObject from "ol/Object";
-
 import { nullCheckRef } from "./Errors";
 
-export function useSetProp<T extends olObject, P>(
+export function useSetProp<T, P>(
   RefObject: RefObject<T | null>,
   prop: P | undefined,
   setter: (obj: T, prop: P) => void,

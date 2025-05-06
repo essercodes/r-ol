@@ -1,6 +1,6 @@
 {
   "name": "@essercodes/r-ol",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "scripts": {
     "preprepare": "tsc -b",
@@ -42,17 +42,25 @@
       "import": "./dist/context/index.js",
       "types": "./dist/context/index.d.ts"
     },
-    "./source": {
-      "import": "./dist/source/index.js",
-      "types": "./dist/source/index.d.ts"
+    "./geom": {
+      "import": "./dist/geom/index.js",
+      "types": "./dist/geom/index.d.ts"
+    },
+    "./interaction": {
+      "import": "./dist/interaction/index.js",
+      "types": "./dist/interaction/index.d.ts"
     },
     "./layer": {
       "import": "./dist/layer/index.js",
       "types": "./dist/layer/index.d.ts"
     },
-    "./interaction": {
-      "import": "./dist/layer/index.js",
-      "types": "./dist/layer/index.d.ts"
+    "./source": {
+      "import": "./dist/source/index.js",
+      "types": "./dist/source/index.d.ts"
+    },
+    "./style": {
+      "import": "./dist/style/index.js",
+      "types": "./dist/style/index.d.ts"
     }
   },
   "files": [

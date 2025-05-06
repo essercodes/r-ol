@@ -18,15 +18,16 @@ pnpm add @essercodes/r-ol ol
 ## Basic Usage
 
 ```jsx
-import React from 'react';
-import { fromLonLat } from 'ol/proj';
-import { Map, View, TileLayer, TargetDiv } from '@essercodes/r-ol';
+import {fromLonLat} from 'ol/proj';
+import {Map, View, TargetDiv, Overlay} from '@essercodes/r-ol';
+import {TileLayer} from '@essercodes/r-ol/layer';
+import {ImageTileSource} from '@essercodes/r-ol/source';
 
 import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
 const lonLat = fromLonLat([-89.38, 43.07])
 
-function MyMap() {
+export function MyMap() {
     return (
         <Map>
             <TargetDiv style={{height: '100svh', width: '100svw'}}/>
@@ -35,16 +36,16 @@ function MyMap() {
                 <h1 style={{color: 'black'}}>HELLO WORLD</h1>
             </Overlay>
             <TileLayer>
-                 <ImageTileSource 
-                     url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
-                     attributions={"Map data from OpenStreetMap"}
+                <ImageTileSource
+                    url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
+                    attributions={"Map data from OpenStreetMap"}
                 />
             </TileLayer>
         </Map>
     );
 }
 
-export default MyMap;
+export default React.memo(MyMap);
 ```
 
 ## Important Notes
@@ -55,6 +56,35 @@ import 'ol/ol.css';
 ```
 
 2. This library uses OpenLayers as a peer dependency, so you need to install it separately.
+
+## Server Side Rendering (SSR) Example
+
+```tsx
+import React from 'react';
+const LazyMyMap = React.lazy(() => import('~/components/MyMap'));
+
+export function ServerSideComponentWithMap() {
+    return (
+        <React.Suspense fallback={<div style={{width: '100%', height:'50dvh'}}>Loading...</div>}>
+            <SafeHydrate>
+                <LazyMyMap
+                    zoom={zoom} lon={lon} lat={lat}
+                    accessKey={accessKey}
+                    style={{width: '100%', height:'50dvh'}}
+                />
+            </SafeHydrate>
+       </React.Suspense> 
+    );
+}
+
+function SafeHydrate({children}: React.PropsWithChildren) {
+    return (
+        <div suppressHydrationWarning>
+            {typeof window === 'undefined' ? null : children}
+        </div>
+    );
+}
+```
 
 ## Components
 
