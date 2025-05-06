@@ -9,7 +9,7 @@ import {useSetProp} from "../UseSetProp.tsx";
 
 export type LineStringProps = SimpleGeometryProps & {
     composing?: olLineString;
-    initialCoordinates: Array<Coordinate> | Array<number>;
+    initialCoordinates?: Array<Coordinate> | Array<number>;
     initialLayout?: GeometryLayout;
     coordinates?: Array<Coordinate>;
 }
@@ -17,7 +17,12 @@ export type LineStringProps = SimpleGeometryProps & {
 export function LineString(props: PropsWithChildren<LineStringProps>) {
     const lineStringRef= useRef<olLineString| null>(props.composing ?? null);
 
-    lineStringRef.current ??= new olLineString(props.initialCoordinates, props.initialLayout);
+    const defaultCoordinates: Array<Coordinate> = []
+
+    lineStringRef.current ??= new olLineString(
+        props.initialCoordinates ?? defaultCoordinates,
+        props.initialLayout
+    );
 
     useSetProp(
         lineStringRef,
