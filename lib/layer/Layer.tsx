@@ -2,24 +2,28 @@ import { PropsWithChildren, useRef } from "react";
 
 import olLayer, {Options as olLayerOptions} from "ol/layer/Layer";
 import { Source as olSource } from "ol/source";
+import olLayerRenderer from "ol/renderer/Layer";
 
 import { useSetProp } from "../UseSetProp";
 import { LayerContext } from "../context";
 import { BaseLayer, BaseLayerProps } from "./Base";
 
-export type LayerProps = BaseLayerProps & {
-  composing?: olLayer;
+
+export type LayerProps<
+    SourceType extends olSource = olSource,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    RendererType extends olLayerRenderer<any> = olLayerRenderer<any>
+> = BaseLayerProps & {
+  composing?: olLayer<SourceType, RendererType>;
   initialOptions?: olLayerOptions;
   source?: olSource;
 };
 
-/**
- * Functional component implements Abstract base class ol/Layer-Layer
- * ol/Layer-Layer. Passed from a composing functional component that implements the inheriting class.
- * @constructor
- * @param props
- */
-export function Layer(props: PropsWithChildren<LayerProps>) {
+export function Layer<
+    SourceType extends olSource = olSource,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    RendererType extends olLayerRenderer<any> = olLayerRenderer<any>
+>(props: PropsWithChildren<LayerProps<SourceType, RendererType>>) {
   const layerRef = useRef<olLayer | null>(props.composing ?? null);
 
   // Instantiate if not passed from composing function.

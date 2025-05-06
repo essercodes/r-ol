@@ -1,2 +1,2 @@
 export * from './Interaction';
-export * from './DblClickDragZoom'
+export * from './DblClickDragZoom';

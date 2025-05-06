@@ -19,9 +19,11 @@ export default defineConfig({
       entry: {
         index:  resolve(__dirname, "lib/index.ts"),
         "context/index":  resolve(__dirname, "lib/context/index.ts"),
+        "geom/index": resolve(__dirname, "lib/geom/index.ts"),
+        "interaction/index":  resolve(__dirname, "lib/interaction/index.ts"),
         "layer/index":  resolve(__dirname, "lib/layer/index.ts"),
         "source/index":  resolve(__dirname, "lib/source/index.ts"),
-        "source/interaction":  resolve(__dirname, "lib/interaction/index.ts"),
+        "style/index": resolve(__dirname, "lib/style/index.ts"),
       },
       name: "@essercodes/r-ol",
       // the proper extensions will be added

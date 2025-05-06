@@ -7,3 +7,4 @@ export * from "./UseInstanceState";
 export * from "./UseSetProp";
 export * from "./View";
 export * from "./Errors.tsx"
+export * from "./Feature.tsx"

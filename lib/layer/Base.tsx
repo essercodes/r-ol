@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useLayoutEffect, useRef} from "react";
 
 import {Collection as olCollection, getUid} from "ol";
 import olLayerTile from "ol/layer/Tile";
@@ -9,6 +9,7 @@ import {BaseLayerContext, LayersArray, useLayerGroup, useLayerGroupArray} from "
 import {useSetProp} from "../UseSetProp";
 import {nullCheckRef} from "../Errors";
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
+import {getElementOrder} from "../GetElementOrder.ts";
 
 export type BaseLayerProps = BaseObjectProps & {
     composing?: olBaseLayer;
@@ -43,6 +44,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
             if (prev.some(l => getUid(l) === uid)) {
                 return newParentLayers;
             }
+
             newParentLayers.push(baseLayer);
             layerAdded = true;
             return newParentLayers;
@@ -57,13 +59,11 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     }, []);
 
     // Explicitly set the zIndex based on component order. Overridden by zIndex prop.
-    useEffect(() => {
-        // fixme: not respected unless components are in a layer group?
-        if (props.composing !== undefined) return; // ZIndex must be set once on outermost composing object.
+    useLayoutEffect(() => {
         const baseLayerDiv = nullCheckRef(baseDivRef);
         const baseLayer = nullCheckRef(baseLayerRef);
         baseLayer.setZIndex(getElementOrder(baseLayerDiv));
-    }, [props.composing]);
+    }, []);
 
     useSetProp(
         baseLayerRef,
@@ -108,6 +108,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
         (baseLayer: olBaseLayer, value: number) => baseLayer.setZIndex(value),
     );
 
+    // baseDivRef outermost component or correctly calculate zOrder based on component order.
     return (
         <div ref={baseDivRef}>
             <BaseObject composing={baseLayerRef.current} debug={props.debug}>
@@ -117,17 +118,4 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
             </BaseObject>
         </div>
     );
-}
-
-
-/**
- * Returns the index of an element in relation to its siblings. If the element
- * has no parent it returns 0.
- * @param element
- */
-function getElementOrder(element: HTMLElement) {
-  const parent = element?.parentNode;
-  if (!parent) return 0;
-
-  return Array.from(parent.children).indexOf(element);
 }

@@ -6,4 +6,6 @@ export * from './BaseTile'
 export * from './Tile.tsx';
 
 export * from './BaseVector.tsx'
+export * from './Vector.tsx'
 export * from './VectorTile.tsx'
+export {getElementOrder} from "../GetElementOrder.ts";
