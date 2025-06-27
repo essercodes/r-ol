@@ -1,12 +1,8 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olLayerGroup from "ol/layer/Group";
 
-import {
-    LayerGroupContext,
-    typeLayerGroup,
-    typeLayerGroupRef,
-} from "../context";
+import {LayerGroupContext, typeLayerGroup, typeLayerGroupRef,} from "../context";
 import {BaseLayer, BaseLayerProps} from "./Base";
 
 export type LayerGroupProps = BaseLayerProps & {
@@ -20,20 +16,11 @@ export function LayerGroup(props: PropsWithChildren<LayerGroupProps>) {
 
     layerGroupRef.current ??= new olLayerGroup();
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <BaseLayer
-            composing={layerGroupRef.current}
-            debug={props.debug}
-            maxZoom={props.maxZoom}
-            opacity={props.opacity}
-            extent={props.extent}
-            maxResolution={props.maxResolution}
-            minResolution={props.minResolution}
-            minZoom={props.minZoom}
-            preload={props.preload}
-            visible={props.visible}
-            zIndex={props.zIndex}
-        >
+        <BaseLayer {...composingProps}>
             <LayerGroupContext.Provider value={layerGroupRef}>
                 {props.children}
             </LayerGroupContext.Provider>

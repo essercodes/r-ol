@@ -1,4 +1,4 @@
-import {useRef, PropsWithChildren} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olVectorSource, {Options as olVectorSourceOptions} from 'ol/source/Vector';
 import {
@@ -32,12 +32,19 @@ export function VectorSource(props: PropsWithChildren<VectorSourceProps>) {
         props.url,
         (vectorSource: olVectorSource, value: string | olFeatureUrlFunction) => vectorSource.setUrl(value),
     )
+
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        initialOptions,
+        loader,
+        url,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <Source
-            composing={vectorSourceRef.current}
-            debug={props.debug}
-            attributions={props.attributions}
-        >
+        <Source {...composingProps}>
             <VectorSourceContext.Provider value={vectorSourceRef}>
                 {props.children}
             </VectorSourceContext.Provider>

@@ -1,4 +1,4 @@
-import {useRef, PropsWithChildren } from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olImageTile from "ol/ImageTile";
 import olImageTileSource, {
@@ -25,14 +25,11 @@ export function ImageTileSource(props: PropsWithChildren<ImageTileSourceProps>) 
         (imageTileSource: olImageTileSource, value: olUrlLike) => imageTileSource.setUrl(value),
     )
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, initialOptions, url, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <DataTileSource
-            composing={imageTileSourceRef.current}
-            debug={props.debug}
-            attributions={props.attributions}
-            tileGridForProjectionProjection={props.tileGridForProjectionProjection}
-            tileGridForProjectionTileGrid={props.tileGridForProjectionTileGrid}
-        >
+        <DataTileSource {...composingProps}>
             {props.children}
         </DataTileSource>
     )

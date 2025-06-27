@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olVectorTileLayer, {Options as olVectorTileLayerOptions} from 'ol/layer/VectorTile.js';
 import olVectorTile from 'ol/source/VectorTile.js';
@@ -46,22 +46,19 @@ export function VectorTileLayer<
         (vectorTileLayer: olVectorTileLayer, value: boolean) => vectorTileLayer.setUseInterimTilesOnError(value),
     )
 
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        initialOptions,
+        background,
+        preload,
+        useInterimTilesOnError,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <BaseVectorLayer
-            composing={vectorTileLayerRef.current}
-            debug={props.debug}
-            maxZoom={props.maxZoom}
-            opacity={props.opacity}
-            extent={props.extent}
-            maxResolution={props.maxResolution}
-            minResolution={props.minResolution}
-            minZoom={props.minZoom}
-            preload={props.preload}
-            visible={props.visible}
-            zIndex={props.zIndex}
-            declutter={props.declutter}
-            style={props.style}
-        >
+        <BaseVectorLayer {...composingProps}>
             {props.children}
         </BaseVectorLayer>
     )

@@ -4,10 +4,7 @@ import olStroke, {Options as olStrokeOptions} from 'ol/style/Stroke';
 import {Color as olColor} from "ol/color";
 import {ColorLike as olColorLike} from "ol/colorlike";
 
-import {
-    useFeature,
-    useStyle,
-} from "../context";
+import {useFeature, useStyle,} from "../context";
 import {nullCheckRef} from "../Errors.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
 
@@ -38,7 +35,7 @@ export function Stroke(props: PropsWithChildren<StrokeProps>) {
     useEffect(() => {
         let strokeSet = false
         const stroke = nullCheckRef(strokeRef);
-        if (!style.getStroke()){
+        if (!style.getStroke()) {
             style.setStroke(stroke);
             strokeSet = true;
         }
@@ -57,7 +54,7 @@ export function Stroke(props: PropsWithChildren<StrokeProps>) {
     useSetProp(
         strokeRef,
         props.color,
-        (stroke: olStroke, value: olColor|olColorLike) => stroke.setColor(value),
+        (stroke: olStroke, value: olColor | olColorLike) => stroke.setColor(value),
     )
 
     useSetProp(

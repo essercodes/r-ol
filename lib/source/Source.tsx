@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
 
 import olSource, {Options as olSourceOptions} from 'ol/source/Source.js';
 
@@ -20,7 +20,7 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     sourceRef.current ??= new olSource(props.initialOptions ?? {});
 
     useEffect(() => {
-        const source= nullCheckRef(sourceRef);
+        const source = nullCheckRef(sourceRef);
         setLayerSource(source);
     }, [setLayerSource]);
 
@@ -31,8 +31,17 @@ export function Source(props: PropsWithChildren<SourceProps>) {
             imageTileSource.setAttributions(value),
     );
 
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        attributions,
+        initialOptions,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <BaseObject composing={sourceRef.current} debug={props.debug}>
+        <BaseObject {...composingProps}>
             {props.children}
         </BaseObject>
     )

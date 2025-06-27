@@ -1,4 +1,4 @@
-import {CSSProperties, PropsWithChildren, useEffect, useRef} from "react";
+import {CSSProperties, PropsWithChildren, useEffect, useMemo, useRef} from "react";
 
 import olOverlay, {Options as olOverlayOptions, Positioning as olPositioning} from "ol/Overlay";
 import {Coordinate as olCoordinate} from "ol/coordinate";
@@ -51,8 +51,22 @@ export function Overlay(props: PropsWithChildren<OverlayProps>) {
         props.positioning,
         (overlay: olOverlay, value: olPositioning) => overlay.setPositioning(value),
     );
+
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        initialOptions,
+        className,
+        style,
+        position,
+        positioning,
+        offset,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <BaseObject composing={overlayRef.current} debug={props.debug}>
+        <BaseObject {...composingProps}>
             <div ref={overlayDivRef} className={props.className} style={props.style}>
                 {props.children}
             </div>

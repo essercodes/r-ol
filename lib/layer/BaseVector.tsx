@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olBaseVectorLayer, {Options as olBaseVectorLayerOptions} from 'ol/layer/BaseVector';
 import {FeatureLike as olFeatureLike} from 'ol/Feature';
@@ -72,20 +72,18 @@ export function BaseVectorLayer<
         >, value: olStyleLike | olFlatStyleLike | null) => baseVectorLayer.setStyle(value),
     )
 
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        initialOptions,
+        declutter,
+        style,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <Layer
-            composing={baseVectorLayerRef.current}
-            debug={props.debug}
-            maxZoom={props.maxZoom}
-            opacity={props.opacity}
-            extent={props.extent}
-            maxResolution={props.maxResolution}
-            minResolution={props.minResolution}
-            minZoom={props.minZoom}
-            preload={props.preload}
-            visible={props.visible}
-            zIndex={props.zIndex}
-        >
+        <Layer {...composingProps}>
             {props.children}
         </Layer>
     )

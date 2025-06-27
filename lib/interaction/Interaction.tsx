@@ -1,6 +1,8 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
 
-import olInteraction, {InteractionOptions as olInteractionOptions} from 'ol/interaction/Interaction';
+import olInteraction, {
+    InteractionOptions as olInteractionOptions
+} from 'ol/interaction/Interaction';
 
 import {BaseObject, BaseObjectProps} from "../Object.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
@@ -34,8 +36,12 @@ export function Interaction(props: PropsWithChildren<InteractionProps>) {
         (interaction: olInteraction, value: boolean) => interaction.setActive(value),
     )
 
+
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, initialOptions, active, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <BaseObject composing={interactionRef.current} debug={props.debug}>
+        <BaseObject {...composingProps}>
             {props.children}
         </BaseObject>
     )

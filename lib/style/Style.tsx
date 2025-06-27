@@ -9,10 +9,9 @@ import {Fill as olFill, Stroke as olStroke} from "ol/style";
 import olText from 'ol/style/Text'
 import {Geometry as olGeometry} from "ol/geom";
 
-import {useFeature} from "../context";
+import {StyleContext, useFeature} from "../context";
 import {nullCheckRef} from "../Errors.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
-import {StyleContext} from "../context";
 import {getElementOrder} from "../layer";
 
 type geometryType = string | olGeometry | olGeometryFunction
@@ -101,7 +100,6 @@ export function Style(props: PropsWithChildren<StyleProps>) {
     // styleDivRef outermost component or correctly calculate zOrder based on component order.
     return (
         <div ref={styleDivRef}>
-
             <StyleContext.Provider value={styleRef}>
                 {props.children}
             </StyleContext.Provider>

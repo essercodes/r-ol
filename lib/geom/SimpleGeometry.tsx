@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olSimpleGeometry from 'ol/geom/SimpleGeometry'
 
@@ -13,12 +13,12 @@ export function SimpleGeometry(props: PropsWithChildren<SimpleGeometryProps>) {
 
     simpleGeometryRef.current ??= new olSimpleGeometry();
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <Geometry
-            composing={simpleGeometryRef.current}
-            debug={props.debug}
-        >
-                {props.children}
+        <Geometry {...composingProps}>
+            {props.children}
         </Geometry>
     )
 }

@@ -1,12 +1,12 @@
-import { PropsWithChildren, useRef } from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olLayer, {Options as olLayerOptions} from "ol/layer/Layer";
-import { Source as olSource } from "ol/source";
+import {Source as olSource} from "ol/source";
 import olLayerRenderer from "ol/renderer/Layer";
 
-import { useSetProp } from "../UseSetProp";
-import { LayerContext } from "../context";
-import { BaseLayer, BaseLayerProps } from "./Base";
+import {useSetProp} from "../UseSetProp";
+import {LayerContext} from "../context";
+import {BaseLayer, BaseLayerProps} from "./Base";
 
 
 export type LayerProps<
@@ -14,9 +14,9 @@ export type LayerProps<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     RendererType extends olLayerRenderer<any> = olLayerRenderer<any>
 > = BaseLayerProps & {
-  composing?: olLayer<SourceType, RendererType>;
-  initialOptions?: olLayerOptions;
-  source?: olSource;
+    composing?: olLayer<SourceType, RendererType>;
+    initialOptions?: olLayerOptions;
+    source?: olSource;
 };
 
 export function Layer<
@@ -24,32 +24,23 @@ export function Layer<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     RendererType extends olLayerRenderer<any> = olLayerRenderer<any>
 >(props: PropsWithChildren<LayerProps<SourceType, RendererType>>) {
-  const layerRef = useRef<olLayer | null>(props.composing ?? null);
+    const layerRef = useRef<olLayer | null>(props.composing ?? null);
 
-  // Instantiate if not passed from composing function.
-  layerRef.current ??= new olLayer(props.initialOptions ?? {});
+    // Instantiate if not passed from composing function.
+    layerRef.current ??= new olLayer(props.initialOptions ?? {});
 
-  useSetProp(layerRef, props.source, (layer: olLayer, value: olSource) =>
-    layer.setSource(value),
-  );
+    useSetProp(layerRef, props.source, (layer: olLayer, value: olSource) =>
+        layer.setSource(value),
+    );
 
-  return (
-    <BaseLayer
-      composing={layerRef.current}
-      debug={props.debug}
-      maxZoom={props.maxZoom}
-      opacity={props.opacity}
-      extent={props.extent}
-      maxResolution={props.maxResolution}
-      minResolution={props.minResolution}
-      minZoom={props.minZoom}
-      preload={props.preload}
-      visible={props.visible}
-      zIndex={props.zIndex}
-    >
-      <LayerContext.Provider value={layerRef}>
-        {props.children}
-      </LayerContext.Provider>
-    </BaseLayer>
-  );
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, initialOptions, source, ...composingProps} = useMemo(() => props, [props]);
+
+    return (
+        <BaseLayer {...composingProps}>
+            <LayerContext.Provider value={layerRef}>
+                {props.children}
+            </LayerContext.Provider>
+        </BaseLayer>
+    );
 }

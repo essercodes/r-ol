@@ -1,4 +1,4 @@
-import {useRef, PropsWithChildren} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olVectorTileSource, {Options as olVectorTileSourceOptions} from "ol/source/VectorTile";
 
@@ -28,12 +28,11 @@ export function VectorTile(props: PropsWithChildren<VectorTileProps>) {
         (vectorTile: olVectorTileSource, value: Array<string>) => vectorTile.setUrls(value),
     )
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, initialOptions, url, urls, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <TileSource
-            composing={vectorTileSourceRef.current}
-            debug={props.debug}
-            attributions={props.attributions}
-        >
+        <TileSource {...composingProps}>
             {props.children}
         </TileSource>
     )

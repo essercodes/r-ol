@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olTileSource from "ol/source/Tile";
 import olLayer from "ol/layer/Layer";
@@ -6,7 +6,6 @@ import olBaseTileLayer, {Options as olBaseTileLayerOptions} from "ol/layer/BaseT
 import olLayerRenderer from "ol/renderer/Layer";
 
 import {Layer, LayerProps} from "./Layer";
-
 
 
 export type BaseTileLayerProps<
@@ -32,21 +31,11 @@ export function BaseTileLayer<
     //Instantiate if not passed.
     baseTileLayerRef.current ??= new olBaseTileLayer(props.initialOptions ?? {});
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, initialOptions, source, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <Layer
-            composing={baseTileLayerRef.current}
-            debug={props.debug}
-            source={props.source}
-            maxZoom={props.maxZoom}
-            opacity={props.opacity}
-            extent={props.extent}
-            maxResolution={props.maxResolution}
-            minResolution={props.minResolution}
-            minZoom={props.minZoom}
-            preload={props.preload}
-            visible={props.visible}
-            zIndex={props.zIndex}
-        >
+        <Layer {...composingProps}>
             {props.children}
         </Layer>
     );

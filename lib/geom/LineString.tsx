@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olLineString from 'ol/geom/LineString'
 
@@ -15,7 +15,7 @@ export type LineStringProps = SimpleGeometryProps & {
 }
 
 export function LineString(props: PropsWithChildren<LineStringProps>) {
-    const lineStringRef= useRef<olLineString| null>(props.composing ?? null);
+    const lineStringRef = useRef<olLineString | null>(props.composing ?? null);
 
     const defaultCoordinates: Array<Coordinate> = []
 
@@ -30,12 +30,19 @@ export function LineString(props: PropsWithChildren<LineStringProps>) {
         (lineString: olLineString, value: Array<Coordinate>) => lineString.setCoordinates(value),
     )
 
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const {
+        children,
+        initialCoordinates,
+        initialLayout,
+        coordinates,
+        ...composingProps
+    } = useMemo(() => props, [props]);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     return (
-        <SimpleGeometry
-            composing={lineStringRef.current}
-            debug={props.debug}
-        >
-                {props.children}
+        <SimpleGeometry {...composingProps}>
+            {props.children}
         </SimpleGeometry>
     )
 }

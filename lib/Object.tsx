@@ -1,4 +1,4 @@
-import {PropsWithChildren, useRef} from "react";
+import {PropsWithChildren, useMemo, useRef} from "react";
 
 import olBaseObject from "ol/Object";
 
@@ -23,8 +23,11 @@ export function BaseObject(props: PropsWithChildren<BaseObjectProps>) {
     //Instantiate if not passed.
     baseObjectRef.current ??= new olBaseObject();
 
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const {children, ...composingProps} = useMemo(() => props, [props]);
+
     return (
-        <Observable composing={baseObjectRef.current} debug={props.debug}>
+        <Observable {...composingProps}>
             {props.children}
         </Observable>
     );
