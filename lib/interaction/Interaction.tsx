@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olInteraction, {
     InteractionOptions as olInteractionOptions
@@ -38,10 +38,10 @@ export function Interaction(props: PropsWithChildren<InteractionProps>) {
 
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptions, active, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptions, active, ...composingProps} = props;
 
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={interactionRef.current}>
             {props.children}
         </BaseObject>
     )

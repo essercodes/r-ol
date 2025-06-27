@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olDblClickDragZoom, {
     Options as olDblClickDragZoomOptions
@@ -17,10 +17,10 @@ export function DblClickDragZoom(props: PropsWithChildren<DblClickDragZoomProps>
     dblClickDragZoomRef.current ??= new olDblClickDragZoom(props.initialOptOptions);
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptOptions, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptOptions, ...composingProps} = props;
 
     return (
-        <Interaction {...composingProps}>
+        <Interaction {...composingProps} composing={dblClickDragZoomRef.current}>
             {props.children}
         </Interaction>
     )

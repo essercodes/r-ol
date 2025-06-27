@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olVectorLayer, {Options as olVectorLayerOptions} from 'ol/layer/Vector'
 import olCanvasVectorLayerRenderer from "ol/renderer/canvas/VectorLayer";
@@ -32,10 +32,10 @@ export function VectorLayer<
     vectorLayerRef.current ??= new olVectorLayer(props.initialOptions);
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptions, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptions, ...composingProps} = props;
 
     return (
-        <BaseVectorLayer {...composingProps}>
+        <BaseVectorLayer {...composingProps} composing={vectorLayerRef.current}>
             {props.children}
         </BaseVectorLayer>
     );

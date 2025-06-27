@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olFeature, {ObjectWithGeometry as olObjectWithGeometry} from "ol/Feature";
 import {Geometry as olGeometry} from "ol/geom";
@@ -76,11 +76,11 @@ export function Feature(props: PropsWithChildren<FeatureProps>) {
         id,
         style,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={featureRef.current}>
             <FeatureContext value={featureRef}>
                 {props.children}
             </FeatureContext>

@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olGeometry from 'ol/geom/Geometry'
 
@@ -33,10 +33,10 @@ export function Geometry(props: PropsWithChildren<GeometryProps>) {
 
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, ...composingProps} = useMemo(() => props, [props]);
+    const {children, ...composingProps} = props;
 
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={geometryRef.current}>
             <GeometryContext.Provider value={geometryRef}>
                 {props.children}
             </GeometryContext.Provider>

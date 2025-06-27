@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olView, {ViewOptions as olViewOptions} from "ol/View";
 import {Coordinate as olCoordinate} from "ol/coordinate";
@@ -57,6 +57,7 @@ export function View(props: PropsWithChildren<ViewProps>) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         children,
+        composing,
         initialOptions,
         center,
         constrainResolution,
@@ -66,11 +67,11 @@ export function View(props: PropsWithChildren<ViewProps>) {
         rotation,
         zoom,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={viewRef.current}>
             <ViewContext.Provider value={viewRef}>
                 {props.children}
             </ViewContext.Provider>
