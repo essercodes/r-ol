@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olTile from "ol/Tile"
 import olDataTileSource, {Options as olDataTileSourceOptions} from 'ol/source/DataTile.js';
@@ -32,15 +32,16 @@ export function DataTileSource<TileType extends olTile>(props: PropsWithChildren
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         children,
+        composing,
         initialOptions,
         tileGridForProjectionProjection,
         tileGridForProjectionTileGrid,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     return (
-        <TileSource {...composingProps}>
+        <TileSource {...composingProps} composing={dataTileSourceRef.current}>
             {props.children}
         </TileSource>
     )

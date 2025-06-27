@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olLayer, {Options as olLayerOptions} from "ol/layer/Layer";
 import {Source as olSource} from "ol/source";
@@ -34,10 +34,10 @@ export function Layer<
     );
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptions, source, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptions, source, ...composingProps} = props;
 
     return (
-        <BaseLayer {...composingProps}>
+        <BaseLayer {...composingProps} composing={layerRef.current}>
             <LayerContext.Provider value={layerRef}>
                 {props.children}
             </LayerContext.Provider>

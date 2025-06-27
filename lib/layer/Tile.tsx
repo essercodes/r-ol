@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olTileLayer from "ol/layer/Tile";
 import olTile from "ol/Tile";
@@ -27,11 +27,11 @@ export function TileLayer(props: PropsWithChildren<TileLayerProps>) {
     );
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, source, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, source, ...composingProps} = props;
 
     return (
         <div ref={tileLayerDivRef}>
-            <BaseTileLayer {...composingProps}>
+            <BaseTileLayer {...composingProps} composing={tileLayerRef.current}>
                 {props.children}
             </BaseTileLayer>
         </div>

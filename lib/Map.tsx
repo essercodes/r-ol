@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import {Collection as olCollection, View as olView} from "ol";
 import olMap, {MapOptions as olMapOptions} from "ol/Map";
@@ -67,6 +67,7 @@ export function Map(props: PropsWithChildren<MapProps>) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         children,
+        composing,
         initialOptions,
         layerGroup,
         layers,
@@ -74,11 +75,13 @@ export function Map(props: PropsWithChildren<MapProps>) {
         target,
         view,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
+    console.log(mapInstanceRef.current);
+
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={mapInstanceRef.current}>
             <MapContext.Provider value={mapInstanceRef}>
                 <LayerGroupContext.Provider value={mapLayerGroupRef}>
                     {props.children}

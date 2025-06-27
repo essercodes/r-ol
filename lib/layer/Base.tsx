@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useLayoutEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useLayoutEffect, useRef} from "react";
 
 import {Collection as olCollection, getUid} from "ol";
 import olLayerTile from "ol/layer/Tile";
@@ -111,6 +111,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         children,
+        composing,
         extent,
         maxResolution,
         maxZoom,
@@ -121,13 +122,13 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
         visible,
         zIndex,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     // baseDivRef outermost component or correctly calculate zOrder based on component order.
     return (
         <div ref={baseDivRef}>
-            <BaseObject {...composingProps}>
+            <BaseObject {...composingProps} composing={baseLayerRef.current}>
                 <BaseLayerContext.Provider value={baseLayerRef}>
                     {props.children}
                 </BaseLayerContext.Provider>

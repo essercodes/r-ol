@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olTileSource, {Options as olTileSourceOptions} from 'ol/source/Tile.js';
 
@@ -14,10 +14,10 @@ export function TileSource(props: PropsWithChildren<TileSourceProps>) {
     tileSourceRef.current ??= new olTileSource(props.initialOptions ?? {})
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptions, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptions, ...composingProps} = props;
 
     return (
-        <Source {...composingProps}>
+        <Source {...composingProps} composing={tileSourceRef.current}>
             {props.children}
         </Source>
     )

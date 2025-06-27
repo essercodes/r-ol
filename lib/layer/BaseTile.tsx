@@ -1,4 +1,4 @@
-import {PropsWithChildren, useMemo, useRef} from "react";
+import {PropsWithChildren, useRef} from "react";
 
 import olTileSource from "ol/source/Tile";
 import olLayer from "ol/layer/Layer";
@@ -32,10 +32,10 @@ export function BaseTileLayer<
     baseTileLayerRef.current ??= new olBaseTileLayer(props.initialOptions ?? {});
 
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const {children, initialOptions, source, ...composingProps} = useMemo(() => props, [props]);
+    const {children, composing, initialOptions, source, ...composingProps} = props;
 
     return (
-        <Layer {...composingProps}>
+        <Layer {...composingProps} composing={baseTileLayerRef.current}>
             {props.children}
         </Layer>
     );

@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useMemo, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 
 import olSource, {Options as olSourceOptions} from 'ol/source/Source.js';
 
@@ -34,14 +34,15 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         children,
+        composing,
         attributions,
         initialOptions,
         ...composingProps
-    } = useMemo(() => props, [props]);
+    } = props;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     return (
-        <BaseObject {...composingProps}>
+        <BaseObject {...composingProps} composing={sourceRef.current}>
             {props.children}
         </BaseObject>
     )
