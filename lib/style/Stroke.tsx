@@ -7,6 +7,7 @@ import {ColorLike as olColorLike} from "ol/colorlike";
 import {useFeature, useStyle,} from "../context";
 import {nullCheckRef} from "../Errors.tsx";
 import {useSetProp} from "../UseSetProp.tsx";
+import {StrokeContext} from "../context/StrokeContext.ts";
 
 export type StrokeProps = {
     composing?: olStroke;
@@ -94,8 +95,8 @@ export function Stroke(props: PropsWithChildren<StrokeProps>) {
     )
 
     return (
-        <div>
+        <StrokeContext.Provider value={strokeRef}>
             {props.children}
-        </div>
+        </StrokeContext.Provider>
     );
 }
