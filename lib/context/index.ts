@@ -8,3 +8,4 @@ export * from "./ObservableContext";
 export * from "./StyleContext";
 export * from "./VectorSourceContext";
 export * from "./ViewContext";
+export * from "./StrokeContext"
