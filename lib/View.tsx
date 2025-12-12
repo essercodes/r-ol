@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useEffectEvent, useRef} from "react";
 
 import olView, {ViewOptions as olViewOptions} from "ol/View";
 import {Coordinate as olCoordinate} from "ol/coordinate";
@@ -27,10 +27,14 @@ export function View(props: PropsWithChildren<ViewProps>) {
 
     viewRef.current ??= new olView(props.initialOptions);
 
-    useEffect(() => {
+    const onMount = useEffectEvent(() => {
         const view = nullCheckRef(viewRef);
         setViewState(view);
-    }, [setViewState]);
+    });
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useSetProp(viewRef, props.center, (view: olView, value: olCoordinate) =>
         view.setCenter(value),

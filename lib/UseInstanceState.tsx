@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useEffectEvent, useRef, useSyncExternalStore } from "react";
 
 import olObservable from "ol/Observable";
 import { Listener } from "ol/events";
@@ -65,11 +65,15 @@ export function useInstanceState<O extends olObservable, T1, T2 = T1>(
         [instance, stateSetter, stateGetter],
     );
 
-    useEffect(() => {
+    const onInitialize = useEffectEvent(() => {
         if (initialState !== undefined) {
             setInstanceState(initialState);
         }
-    }, [initialState, setInstanceState]);
+    });
+
+    useEffect(() => {
+        onInitialize();
+    }, [initialState]);
 
     return [state, setInstanceState];
 }

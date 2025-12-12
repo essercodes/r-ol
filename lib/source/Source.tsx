@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useEffectEvent, useRef} from "react";
 
 import olSource, {Options as olSourceOptions} from 'ol/source/Source.js';
 
@@ -19,10 +19,14 @@ export function Source(props: PropsWithChildren<SourceProps>) {
     const sourceRef = useRef<olSource | null>(props.composing ?? null);
     sourceRef.current ??= new olSource(props.initialOptions ?? {});
 
-    useEffect(() => {
+    const onMount = useEffectEvent(() => {
         const source = nullCheckRef(sourceRef);
         setLayerSource(source);
-    }, [setLayerSource]);
+    });
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useSetProp(
         sourceRef,

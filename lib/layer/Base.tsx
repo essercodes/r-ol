@@ -1,4 +1,4 @@
-import {PropsWithChildren, useEffect, useLayoutEffect, useRef} from "react";
+import {PropsWithChildren, useEffect, useEffectEvent, useLayoutEffect, useRef} from "react";
 
 import {Collection as olCollection, getUid} from "ol";
 import olLayerTile from "ol/layer/Tile";
@@ -34,7 +34,7 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
     baseLayerRef.current ??= new olLayerTile();
 
     // Add to parent layer group.
-    useEffect(() => {
+    const onAddLayer = useEffectEvent(() => {
         const baseLayer = nullCheckRef(baseLayerRef);
         const uid = getUid(baseLayer);
         let layerAdded = false;
@@ -54,8 +54,10 @@ export function BaseLayer(props: PropsWithChildren<BaseLayerProps>) {
             if (!layerAdded) return;
             group.getLayers().remove(baseLayer);
         };
+    });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        return onAddLayer();
     }, []);
 
     // Explicitly set the zIndex based on component order. Overridden by zIndex prop.

@@ -1,4 +1,4 @@
-import {CSSProperties, useLayoutEffect, useRef} from "react";
+import {CSSProperties, useEffectEvent, useLayoutEffect, useRef} from "react";
 
 import { useMapTarget } from "./context";
 
@@ -6,11 +6,15 @@ export function TargetDiv({ className, style }: { className?: string, style?: CS
   const mapDivRef = useRef<HTMLDivElement>(null);
   const [, setTarget] = useMapTarget();
 
-  useLayoutEffect(() => {
+  const onMount = useEffectEvent(() => {
     if (mapDivRef.current === null)
       throw new Error("Map div reference not set.");
     setTarget(mapDivRef.current);
-  }, [setTarget]);
+  });
+
+  useLayoutEffect(() => {
+    onMount();
+  }, []);
 
   return (
     <div
