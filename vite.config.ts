@@ -19,6 +19,7 @@ export default defineConfig({
       entry: {
         index:  resolve(__dirname, "lib/index.ts"),
         "context/index":  resolve(__dirname, "lib/context/index.ts"),
+        "control/index":  resolve(__dirname, "lib/control/index.ts"),
         "geom/index": resolve(__dirname, "lib/geom/index.ts"),
         "interaction/index":  resolve(__dirname, "lib/interaction/index.ts"),
         "layer/index":  resolve(__dirname, "lib/layer/index.ts"),

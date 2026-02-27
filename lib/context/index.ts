@@ -1,4 +1,5 @@
 export * from "./BaseLayerContext";
+export * from "./ControlContext";
 export * from "./FeatureContext"
 export * from "./GeometryContext";
 export * from "./LayerContext";

@@ -42,6 +42,10 @@
       "import": "./dist/context/index.js",
       "types": "./dist/context/index.d.ts"
     },
+    "./control": {
+      "import": "./dist/control/index.js",
+      "types": "./dist/control/index.d.ts"
+    },
     "./geom": {
       "import": "./dist/geom/index.js",
       "types": "./dist/geom/index.d.ts"
