@@ -22,12 +22,17 @@ import {fromLonLat} from 'ol/proj';
 import {Map, View, TargetDiv, Overlay} from '@essercodes/r-ol';
 import {TileLayer} from '@essercodes/r-ol/layer';
 import {ImageTileSource} from '@essercodes/r-ol/source';
+import type {ReactNode} from "react";
 
 import 'ol/ol.css'; // Important! Import the OpenLayers CSS in your application
 
 const lonLat = fromLonLat([-89.38, 43.07])
 
-export function MyMap() {
+export interface MapProps {
+    fallback?: ReactNode,
+}
+
+export default function myMap(props: MapProps) {
     return (
         <Map>
             <TargetDiv style={{height: '100svh', width: '100svw'}}/>
@@ -57,32 +62,41 @@ import 'ol/ol.css';
 
 2. This library uses OpenLayers as a peer dependency, so you need to install it separately.
 
-## Server Side Rendering (SSR) Example
-
+## React Router v7 Example
+This wrapper function allows the `MyMap` to work with React Router v7 SSR.
 ```tsx
-import React from 'react';
-const LazyMyMap = React.lazy(() => import('~/components/MyMap'));
+import React, {
+    lazy,
+    type PropsWithChildren,
+    type ReactNode,
+    Suspense,
+    useEffect,
+    useState
+} from "react";
 
-export function ServerSideComponentWithMap() {
-    return (
-        <React.Suspense fallback={<div style={{width: '100%', height:'50dvh'}}>Loading...</div>}>
-            <SafeHydrate>
-                <LazyMyMap
-                    zoom={zoom} lon={lon} lat={lat}
-                    accessKey={accessKey}
-                    style={{width: '100%', height:'50dvh'}}
-                />
-            </SafeHydrate>
-       </React.Suspense> 
-    );
+import type {MapProps} from "~/routes/MyMap";
+const LazyMap = lazy(() => import('~/routes/MyMap'));
+
+function ClientOnly(props: PropsWithChildren<{ fallback?: ReactNode }>) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+
+        return () => setMounted(false);
+    }, []);
+
+    return mounted ? props.children : (props.fallback ?? null);
 }
 
-function SafeHydrate({children}: React.PropsWithChildren) {
+export default function SafeMap(props: MapProps) {
     return (
-        <div suppressHydrationWarning>
-            {typeof window === 'undefined' ? null : children}
-        </div>
-    );
+        <ClientOnly fallback={props.fallback}>
+            <Suspense fallback={props.fallback}>
+                <LazyMap {...props}/>
+            </Suspense>
+        </ClientOnly>
+    )
 }
 ```
 
